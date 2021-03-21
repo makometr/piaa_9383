@@ -45,6 +45,29 @@ TEST_CASE("Field Constructor Test", "[internal Field Test]" ) {
 
 TEST_CASE("PlaceSquare() and set_cur_square_size() test", "[internal Field Test]" ) {
     Field field(5);
+
+    field.set_cur_square_size(2);
+    field.PlaceSquare(-1, 0);
+
+    answer = {
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0}
+    };
+
+    REQUIRE(field.get_arr() == answer);
+
+    field.PlaceSquare(4, 20);
+
+    REQUIRE(field.get_arr() == answer);
+
+    field.set_cur_square_size(20);
+    field.PlaceSquare(0, 0);
+
+    REQUIRE(field.get_arr() == answer);
+
     field.set_cur_square_size(2);
     field.PlaceSquare(0, 0);
 

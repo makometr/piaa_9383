@@ -32,7 +32,7 @@ public:
 
     long long int get_operations_amount() { return operations_amount_; }
 
-    void set_cur_square_size(int value) { cur_square_size_ = value; }
+    void set_cur_square_size(int value) { if(value > 0) cur_square_size_ = value; }
 
 private:
     int size_;

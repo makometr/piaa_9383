@@ -28,6 +28,9 @@ void Field::PrintStack() {
 }
 
 void Field::PlaceSquare(int x, int y) {
+    if (y + cur_square_size_ > size_ || y < 0) { return; }
+	if (x + cur_square_size_ > size_ || x < 0) { return; }
+
     squares_amount_++;
 
 	for (int i = y; i < y + cur_square_size_; i++) {
