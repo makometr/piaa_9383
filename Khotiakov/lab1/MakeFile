@@ -1,0 +1,9 @@
+
+all: main.o functions.o
+	g++ main.o functions.o -o lab1
+
+main.o:
+	g++ -c source/main.cpp source/functions.h -o main.o
+
+functions.o:
+	g++ -c source/functions.cpp source/functions.h -o functions.o
