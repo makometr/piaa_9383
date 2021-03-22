@@ -1,12 +1,7 @@
 #include "Table.hpp"
 
-using namespace std;
 
 Table::Table(int width) {
-    tempY = 0;
-    tempX = 0;
-    squaresCounter = 0;
-    minSquares = 0;
     this->width = width;
     table.resize(width);
     for (int i = 0; i < width; i++) {
@@ -22,7 +17,7 @@ void Table::calculations() {
     int min = width * width;
     minSquares = min;
     do {
-        if(alignment()) {
+        if(isFullAlignment()) {
             if(squaresCounter < min) {
                 bestCase = squares;
                 bestTable = table;
@@ -37,11 +32,20 @@ void Table::calculations() {
 
 void Table::running() {
     if (width % 2 == 0) {
-        cout << 4 << endl;
-        cout << 1 << ' ' << 1 << ' ' << width / 2 << '\n';
-        cout << width / 2 + 1  << ' ' << 1 << ' ' << width / 2 << '\n';
-        cout << 1 << ' ' << width / 2 + 1 << ' ' << width / 2 << '\n';
-        cout << width / 2 + 1 << ' ' << width / 2 + 1 << ' ' << width / 2 << '\n';
+        std::cout << "Count of squares: " <<  4 << std::endl;
+        std::cout << "x: " << 1 << " y: " << 1 << " side: " << width / 2 << '\n';
+        std::cout << "x: " << width / 2 + 1
+                  << " y: " << 1
+                  << " side: " << width / 2
+                  << '\n';
+        std::cout << "x: " << 1
+                  << " y: " << width / 2 + 1
+                  << " side: " << width / 2
+                  << '\n';
+        std::cout << "x: " << width / 2 + 1
+                  << " y: " << width / 2 + 1
+                  << " side: " << width / 2
+                  << '\n';
         return;
     }
 
@@ -67,12 +71,14 @@ void Table::running() {
 }
 
 void Table::printAnswer(int pow) {
-    cout << minSquares << endl;
+    std::cout << "Count of squares: "<< minSquares << std::endl;
     for(int i = 0; i < minSquares; i++) {
         Square temp = bestCase.top();
         bestCase.pop();
-        cout << temp.x * pow + 1 <<  ' '
-            << temp.y * pow + 1 << ' ' << temp.side * pow <<endl ;
+        std::cout << "x: " <<temp.x * pow + 1
+            << " y: " << temp.y * pow + 1
+            << " side: "<< temp.side * pow
+            << std::endl;
     }
 }
 
@@ -101,12 +107,12 @@ void Table::startAlignment() {
 void Table::print() {
     for (int i = 0; i < width; i++) {
         for(int j = 0; j < width; j++) {
-            cout << bestTable[i][j];
+            std::cout << bestTable[i][j];
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
-bool Table::alignment() {
+bool Table::isFullAlignment() {
     if(currentSquare == 0)
         currentSquare = width / 2;
     for(int i = width/2; i < width; i++) {

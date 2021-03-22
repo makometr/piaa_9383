@@ -3,12 +3,13 @@
 #include "../Source/Table.hpp"
 
 
-vector<vector<int>> testTable;
-Table table = Table(10);
+
+
 
 TEST_CASE( "Squares are placed when appropriate", "[placing]" ) {
-
-    testTable = {{1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
+    Table table = Table(10);
+    std::vector<std::vector<int>> testTable = {
+                {1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
                 {1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
                 {1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
                 {1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
@@ -79,7 +80,9 @@ TEST_CASE( "Squares are placed when appropriate", "[placing]" ) {
 }
 
 TEST_CASE( "Squares are not placed when they are not appropriate", "[not placing]" ) {
-    testTable = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    Table table = Table(10);
+    std::vector<std::vector<int>> testTable = {
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -144,7 +147,9 @@ TEST_CASE( "Squares are not placed when they are not appropriate", "[not placing
 }
 
 TEST_CASE( "Squares are cleared when it is possible ", "[clearing]" ) {
-    testTable = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    Table table = Table(10);
+    std::vector<std::vector<int>> testTable = {
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -194,7 +199,9 @@ TEST_CASE( "Squares are cleared when it is possible ", "[clearing]" ) {
 }
 
 TEST_CASE( "Squares are not cleared when it is not possible ", "[no clearing]" ) {
-    testTable = {{0, 0, 1, 1, 1, 0, 0, 0, 0, 0 },
+    Table table = Table(10);
+    std::vector<std::vector<int>> testTable = {
+                {0, 0, 1, 1, 1, 0, 0, 0, 0, 0 },
                 {1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
                 {1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
                 {1, 1, 1, 1, 1, 0, 0, 0, 0, 0 },
@@ -225,11 +232,13 @@ TEST_CASE( "Squares are not cleared when it is not possible ", "[no clearing]" )
     table.clearSquare(0, 0, 5);
 }
 
-Table table3 = Table(3);
-Table table5 = Table(5);
+
+
 
 TEST_CASE( "Start alignment works right ", "[start alignment]" ) {
-    testTable = {{1, 1, 3},
+    Table table3 = Table(3);
+    std::vector<std::vector<int>> testTable = {
+                {1, 1, 3},
                 {1, 1 , 0},
                 {2, 0, 0}};
     table3.startAlignment();
@@ -244,7 +253,7 @@ TEST_CASE( "Start alignment works right ", "[start alignment]" ) {
                 {1, 1, 1, 0, 0},
                 {2, 2, 0, 0, 0},
                 {2, 2, 0, 0, 0}};
-
+    Table table5 = Table(5);
     table5.startAlignment();
     REQUIRE(table5.getTable() == testTable);
     table5.clearSquare(3, 0, 2);
@@ -254,7 +263,9 @@ TEST_CASE( "Start alignment works right ", "[start alignment]" ) {
 }
 
 TEST_CASE( "Backtracking works right ", "[alignment]" ) {
-    testTable = {{1, 1, 3},
+    Table table3 = Table(3);
+    std::vector<std::vector<int>> testTable = {
+                {1, 1, 3},
                 {1, 1, 0},
                 {2, 0, 0}};
 
@@ -274,10 +285,11 @@ TEST_CASE( "Backtracking works right ", "[alignment]" ) {
     REQUIRE(table3.getTable() == testTable);
 
     table3.setCurrentSquare(0);
-    table3.alignment();
+    table3.isFullAlignment();
     table3.backTracking();
     REQUIRE(table3.getTable() == testTable);
 
+    Table table5 = Table(5);
     testTable = {{1, 1, 1, 3, 3},
                 {1, 1, 1, 3, 3},
                 {1, 1, 1, 0, 0},

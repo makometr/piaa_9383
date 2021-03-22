@@ -5,7 +5,6 @@
 #include <vector>
 #include <stack>
 
-using namespace std;
 
 struct Square {
     int x = 0;
@@ -15,21 +14,21 @@ struct Square {
 };
 
 class Table {
-    vector <vector<int>> table;
-    vector <vector<int>> bestTable;
+    std::vector <std::vector<int>> table;
+    std::vector <std::vector<int>> bestTable;
 
-    int tempY;
-    int tempX;
+    int tempY = 0;
+    int tempX = 0;
     int width;
-    int squaresCounter;
-    int minSquares;
+    int squaresCounter = 0;
+    int minSquares = 0;
 
     int currentSquare;
 
-    stack<Square> squares;
+    std::stack<Square> squares;
 
 public:
-    const vector <vector<int>> getTable() { return table; }
+    const std::vector <std::vector<int>> getTable() { return table; }
     int getsquaresCounter() { return squaresCounter; }
     void setTempX(int tempX) { this->tempX = tempX; }
     void setTempY(int tempY) { this->tempY = tempY; }
@@ -38,12 +37,12 @@ public:
     void printAnswer(int pow = 1);
     void startAlignment();
     void print();
-    bool alignment();
+    bool isFullAlignment();
     bool newSquare();
     void clearSquare(int x, int y, int side);
     bool backTracking();
 
-    stack<Square> bestCase;
+    std::stack<Square> bestCase;
     void running();
     Table(int width);
 };
