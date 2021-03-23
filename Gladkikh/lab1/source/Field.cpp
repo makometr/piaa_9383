@@ -52,17 +52,17 @@ bool Field::Fill(int min_amount) {
             if (!matrix_[y][x]) {
                 if (squares_amount_ >= min_amount) {
                     return false;
-				}
+                }
                 while(!CheckEnoughPlace(x, y)) {
                     --cur_square_size_;
                 }
                 //std::cout << "x: " << x << " y: " << y << "\n";
                 //std::cout << cur_square_size_ << "\n";
                 PlaceSquare(x, y);
-			}
-		}
-	}
-	return true;
+            }
+        }
+    }
+    return true;
 }
 
 void Field::Backtrace() {
