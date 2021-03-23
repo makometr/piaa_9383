@@ -1,5 +1,7 @@
 #include "Squaring.h"
 
+#define DEBUG 0
+
 Squaring::Squaring(int size) {
   this->m_size = size;
   m_current.resize(m_size);
@@ -30,12 +32,13 @@ bool Squaring::placeSquare(int i, int j, int size) {
     return false;
   if (size == 0) {
     size = getMaxSquareSize(i, j);
-    std::cerr << "placeSquare: size = " << size << "\n";
+//    std::cerr << "placeSquare: size = " << size << "\n";
   }
   m_counter++;
   for (int k_i = 0; k_i < size; k_i++)
     for (int k_j = 0; k_j < size; k_j++)
       m_current[i+k_i][j+k_j] = m_counter;
+  m_squares.push(Square(i, j, size));
   return true;
 }
 std::vector<std::vector<int>> Squaring::getCurrentSquaring(){
@@ -48,7 +51,6 @@ int Squaring::getCounter() const {
   return m_counter;
 };
 void Squaring::eval() {
-  m_minimalSquaring = 2*m_size;
   this->baseCase1();
   while (true) {
     if (this->complete())
@@ -87,7 +89,7 @@ void Squaring::printResult() {
 }
 void Squaring::printSquares(const std::stack<Square>& squares) const {
   auto copy = squares;
-  while (!copy.empty()) {
+  while (!(copy.empty())) {
     std::cout << copy.top().m_x*multiplier+1 << ' ' << copy.top().m_y*multiplier+1 << ' '
               << copy.top().m_size*multiplier << std::endl;
     copy.pop();
@@ -110,6 +112,9 @@ void Squaring::baseCase1() {
     m_current[m_size-1][i] = m_counter;
     m_squares.push(Square(m_size - 1, i, 1));
   }
+  m_minimalSquaring = m_counter;
+  m_squares_best = m_squares;
+  m_best = m_current;
 }
 void Squaring::baseCase2() {
   for (int i = 0; i < m_size; i++)
@@ -143,8 +148,10 @@ std::ostream& operator<<(std::ostream& os, Squaring& squaring) {
   return os;
 }
 bool Squaring::complete() {
-  std::cout << *this;
+#if DEBUG
+  std::cerr << *this;
   std::cerr << "complete...\n";
+#endif // DEBUG
   for (int i = 0; i < m_size; i++)
     for (int j = 0; j < m_size; j++) {
       if (m_current[i][j] != 0)
@@ -152,37 +159,59 @@ bool Squaring::complete() {
       this->placeSquare(i, j);
 //      if (this->placeSquare(i, j))
 //        j += m_squares.top().m_size;
-      if (m_counter > m_minimalSquaring) {
-        std::cerr << "bad solution, (>min)\n";
+      if (m_counter >= m_minimalSquaring) {
+#if DEBUG
+        std::cerr << "bad solution, (>=min)\n";
+#endif // DEBUG
         return false;
       }
     }
-  std::cout << *this;
+#if DEBUG
+  std::cerr << *this;
   std::cerr << "complete -> true\n";
+#endif // DEBUG
   return true;
 }
 void Squaring::pop() {
+  if (m_squares.empty())
+    return;
+#if DEBUG
+  std::cerr << "popping...\n";
+#endif // DEBUG
   Square tmp = m_squares.top();
   for (int i = tmp.m_y; i < tmp.m_y + tmp.m_size; i++)
     for (int j = tmp.m_x; j < tmp.m_x + tmp.m_size; j++)
-      m_current[i][j] = 0;
+      m_current[j][i] = 0;
   m_squares.pop();
   m_counter--;
+#if DEBUG
+  std::cerr << *this;
+  std::cerr << "popped\n";
+#endif // DEBUG
 }
 bool Squaring::backtrack() {
+#if DEBUG
   std::cerr << "backtrack...\n";
-  Square tmp = m_squares.top();
-  while ((tmp.m_size == 1) && (!m_squares.empty())) {
-    this->pop();
-    tmp = m_squares.top();
+#endif // DEBUG
+  if (m_squares.empty())
+    return false;
+  while (!(m_squares.empty())) {
+    Square tmp = m_squares.top();
+    if (tmp.m_size == 1)
+      this->pop();
+    else
+      break;
   }
   if (m_squares.empty())
     return false;
+  Square tmp = m_squares.top();
   int x = tmp.m_x;
   int y = tmp.m_y;
   int size = tmp.m_size;
   this->pop();
-  placeSquare(x, y, size-1);
+  placeSquare(x, y, size - 1);
+#if DEBUG
   std::cerr << "backtrack->true\n";
+#endif // DEBUG
   return true;
 }
