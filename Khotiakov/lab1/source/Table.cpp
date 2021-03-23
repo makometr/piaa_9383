@@ -1,10 +1,6 @@
-#include "functions.h"
+#include "Table.h"
 
-int N;
-int minCounter;
-vector<pair<int, pair<int, int>>> resArr;
-
-void printAnswer(int scale)
+void Table::printAnswer(int scale)
 {
     cout << minCounter << '\n';
     for (int i = 0; i < minCounter; i++)
@@ -13,7 +9,7 @@ void printAnswer(int scale)
     }
 }
 
-void insertBlock(vector<vector<bool>> &mainArr, int m, int x, int y) //Вставка квадрата размером m * m с левым верхним углов в точке (x, y)
+void Table::insertBlock(int m, int x, int y) //Вставка квадрата размером m * m с левым верхним углов в точке (x, y)
 {
     for (int i = 0; i < m; i++)
     {
@@ -24,7 +20,7 @@ void insertBlock(vector<vector<bool>> &mainArr, int m, int x, int y) //Вста�
     }
 }
 
-void removeBlock(vector<vector<bool>> &mainArr, int m, int x, int y) //Вставка квадрата размером m * m с левым верхним углов в точке (x, y)
+void Table::removeBlock(int m, int x, int y) //Вставка квадрата размером m * m с левым верхним углов в точке (x, y)
 {
     for (int i = 0; i < m; i++)
     {
@@ -35,7 +31,7 @@ void removeBlock(vector<vector<bool>> &mainArr, int m, int x, int y) //Вста�
     }
 }
 
-pair<int, int> findEmpty(vector<vector<bool>> &mainArr) //Поиск первой свободной ячейки для вставки
+pair<int, int> Table::findEmpty() //Поиск первой свободной ячейки для вставки
 {
     for (int i = N / 2; i < N; i++)
     {
@@ -48,7 +44,7 @@ pair<int, int> findEmpty(vector<vector<bool>> &mainArr) //Поиск перво�
     return make_pair(-1, -1);
 }
 
-pair<int, bool> findMaxSize(vector<vector<bool>> &mainArr, int x, int y)
+pair<int, bool> Table::findMaxSize(int x, int y)
 {
     for (int i = y + 1; i < N; i++)
     {
@@ -64,9 +60,9 @@ pair<int, bool> findMaxSize(vector<vector<bool>> &mainArr, int x, int y)
     return make_pair((N - x > N - y) ? N - y : N - x, false);
 }
 
-void chooseBlock(vector<vector<bool>> &mainArr, vector<pair<int, pair<int, int>>> &tmpArr, int counter, int x, int y)
+void Table::chooseBlock(vector<pair<int, pair<int, int>>> &tmpArr, int counter, int x, int y)
 {
-    pair<int, int> coord = findEmpty(mainArr);
+    pair<int, int> coord = findEmpty();
     if (coord.first == -1)
     {
         if (tmpArr.size() < minCounter)
@@ -82,13 +78,13 @@ void chooseBlock(vector<vector<bool>> &mainArr, vector<pair<int, pair<int, int>>
     }
     int tmpBestCounter = minCounter;
     //поиск места для вставки блока
-    pair<int, bool> maxSize = findMaxSize(mainArr, coord.first, coord.second); //поиск максимального размера блока для вставки на найденное пустое место
-    if (maxSize.second)                                                        //Если можно вставить сразу блок максимального размера
+    pair<int, bool> maxSize = findMaxSize(coord.first, coord.second); //поиск максимального размера блока для вставки на найденное пустое место
+    if (maxSize.second)                                               //Если можно вставить сразу блок максимального размера
     {
         tmpArr.push_back(make_pair(maxSize.first, coord));
-        insertBlock(mainArr, maxSize.first, coord.first, coord.second);
-        chooseBlock(mainArr, tmpArr, counter + 1, x, y); //вставляем очередной блок
-        removeBlock(mainArr, maxSize.first, coord.first, coord.second);
+        insertBlock(maxSize.first, coord.first, coord.second);
+        chooseBlock(tmpArr, counter + 1, x, y); //вставляем очередной блок
+        removeBlock(maxSize.first, coord.first, coord.second);
         tmpArr.pop_back();
     }
     else
@@ -98,29 +94,29 @@ void chooseBlock(vector<vector<bool>> &mainArr, vector<pair<int, pair<int, int>>
             if (tmpBestCounter > minCounter && i == 1)
                 continue;
             tmpArr.push_back(make_pair(i, coord));
-            insertBlock(mainArr, i, coord.first, coord.second);
-            chooseBlock(mainArr, tmpArr, counter + 1, x, y); //вставляем очередной блок
-            removeBlock(mainArr, i, coord.first, coord.second);
+            insertBlock(i, coord.first, coord.second);
+            chooseBlock(tmpArr, counter + 1, x, y); //вставляем очередной блок
+            removeBlock(i, coord.first, coord.second);
             tmpArr.pop_back();
         }
     }
 }
 
-void primeNumber(vector<vector<bool>> &mainArr) //вставка начальных блоков и начало работы бэктрекинга
+void Table::primeNumber() //вставка начальных блоков и начало работы бэктрекинга
 {
-    insertBlock(mainArr, N / 2 + 1, 0, 0);
-    insertBlock(mainArr, N / 2, N / 2 + 1, 0);
-    insertBlock(mainArr, N / 2, 0, N / 2 + 1);
+    insertBlock(N / 2 + 1, 0, 0);
+    insertBlock(N / 2, N / 2 + 1, 0);
+    insertBlock(N / 2, 0, N / 2 + 1);
     int counter = 3;
     int minCounter = N * N;
     vector<pair<int, pair<int, int>>> tmpArr;
     tmpArr.push_back(make_pair(N / 2 + 1, make_pair(0, 0)));
     tmpArr.push_back(make_pair(N / 2, make_pair(N / 2 + 1, 0)));
     tmpArr.push_back(make_pair(N / 2, make_pair(0, N / 2 + 1)));
-    chooseBlock(mainArr, tmpArr, counter, N / 2, N / 2);
+    chooseBlock(tmpArr, counter, N / 2, N / 2);
 }
 
-void division2()
+void Table::division2()
 {
     if (N % 2 == 0)
     {
@@ -133,20 +129,20 @@ void division2()
     }
 }
 
-void division3(vector<vector<bool>> &mainArr)
+void Table::division3()
 {
     int realN = N;
     int scale = N / 3;
     N = 3;
-    primeNumber(mainArr);
+    primeNumber();
     printAnswer(scale);
 }
 
-void division5(vector<vector<bool>> &mainArr)
+void Table::division5()
 {
     int realN = N;
     int scale = N / 5;
     N = 5;
-    primeNumber(mainArr);
+    primeNumber();
     printAnswer(scale);
 }

@@ -1,31 +1,31 @@
-#include "functions.h"
+#include "Table.h"
 
 int main()
 {
+
+    int N;
     cin >> N;
-    minCounter = N * N;
+    Table table(N);
+
     if (N % 2 == 0)
     {
-        division2();
+        table.division2();
         return 0;
     }
     //создание "карты" дял стола
-    vector<vector<bool>> mainArr(N);
-    for (int i = 0; i < N; i++)
-        mainArr[i].resize(N);
 
     if (N % 3 == 0)
     {
-        division3(mainArr);
+        table.division3();
     }
     else if (N % 5 == 0)
     {
-        division5(mainArr);
+        table.division5();
     }
     else
     {
-        primeNumber(mainArr);
-        printAnswer();
+        table.primeNumber();
+        table.printAnswer();
     }
 
     return 0;
