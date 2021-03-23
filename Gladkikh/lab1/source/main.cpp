@@ -73,11 +73,10 @@ int main() {
 
         operations_amount += field.get_operations_amount();
 
-		if (filled_succesfully && field.get_squares_amount() < min_amount) {
+        if (filled_succesfully && field.get_squares_amount() < min_amount) {
             min_field = field;
-			min_amount = field.get_squares_amount();
-
-		}
+            min_amount = field.get_squares_amount();
+        }
 
         field.Backtrace();
 
