@@ -40,7 +40,7 @@ void Field::PlaceSquare(int x, int y) {
         }
     }
 
-	square_stack_.push({ x, y, cur_square_size_ });
+    square_stack_.push({ x, y, cur_square_size_ });
 
     cur_square_size_ = default_square_size_;
 }
