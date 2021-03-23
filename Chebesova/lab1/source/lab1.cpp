@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-using namespace std;
 
 int countOperation = 0;  //переменная для подсчета количества операций
 
@@ -80,10 +79,10 @@ struct TableTop  //столешница
 
 void printSquaresData(const std::vector<Square> &current)  //печать данных по квадратам на экран
 {
-    cout << "Min number of squares: " << current.size() << '\n';
+    std::cout << "Min number of squares: " << current.size() << '\n';
     for (auto square : current) 
     {
-        cout << "x coord: " << square.x << "; y coord: " << square.y << "; size: " << square.size << '\n';
+        std::cout << "x coord: " << square.x << "; y coord: " << square.y << "; size: " << square.size << '\n';
     }
 }
 
@@ -92,7 +91,7 @@ void backtracking(TableTop &table);
 decltype(TableTop::current) analysisN(int N)  //в зависимости от входных данных выбираем ход действий
 {
     TableTop table(N);
-    table.minAmount = (N + 3) + 1; // +1 to record squares
+    table.minAmount = (N + 3) + 1;
     if (N % 2 != 0 && N % 3 != 0 && N % 5 != 0) 
     {
         int size = N/2 + 1;
@@ -103,9 +102,9 @@ decltype(TableTop::current) analysisN(int N)  //в зависимости от �
     }
     else 
     {
-        if (N % 2 == 0) table.minAmount = 4 + 1; // +1 to record squares
-        else if (N % 3 == 0) table.minAmount = 6 + 1; // +1 to record squares
-        else if (N % 5 == 0) table.minAmount = 8 + 1; // +1 to record squares
+        if (N % 2 == 0) table.minAmount = 4 + 1; 
+        else if (N % 3 == 0) table.minAmount = 6 + 1; 
+        else if (N % 5 == 0) table.minAmount = 8 + 1;
         backtracking(table);
     }
     return table.minSquares;
@@ -139,10 +138,10 @@ void backtracking(TableTop &table)   //основаная фукция осущ�
 int main() 
 {
     int N;
-    cout << "Size of table top: ";
-    cin >> N;
+    std::cout << "Size of table top: ";
+    std::cin >> N;
     auto current = analysisN(N);
     printSquaresData(current);
-    cout << "Number of operations: " << countOperation << '\n';
+    std::cout << "Number of operations: " << countOperation << '\n';
     return 0;
 }
