@@ -26,7 +26,7 @@ public:
 
     bool get_running() { return running_; }
 
-    const std::vector<std::vector<int>> get_arr() { return arr_; }
+    const std::vector<std::vector<int>> get_matrix() { return matrix_; }
 
     int get_squares_amount() { return squares_amount_; }
 
@@ -37,7 +37,7 @@ public:
 private:
     int size_;
     int default_square_size_;
-    std::vector<std::vector<int>> arr_;
+    std::vector<std::vector<int>> matrix_;
     std::stack<Square> square_stack_;
 
     int squares_amount_ = 0;

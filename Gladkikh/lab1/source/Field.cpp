@@ -9,7 +9,7 @@ Field::Field(int size) {
 }
 
 void Field::Print() {
-    for(auto line: arr_) {
+    for(auto line: matrix_) {
         for(auto cell: line) {
             std::cout << cell << " ";
         }
@@ -28,15 +28,15 @@ void Field::PrintStack() {
 }
 
 void Field::PlaceSquare(int x, int y) {
-    if (y + cur_square_size_ > size_ || y < 0) { return; }
-	if (x + cur_square_size_ > size_ || x < 0) { return; }
+    if (y + cur_square_size_ > size_ || y < 0) return;
+    if (x + cur_square_size_ > size_ || x < 0) return;
 
     squares_amount_++;
 
 	for (int i = y; i < y + cur_square_size_; i++) {
 		for (int j = x; j < x + cur_square_size_; j++) {
             ++operations_amount_;
-			arr_[i][j] = squares_amount_;
+            matrix_[i][j] = squares_amount_;
 		}
 	}
 
@@ -49,7 +49,7 @@ bool Field::Fill(int min_amount) {
 	for (int y = size_ / 2; y < size_; y++) {
 		for (int x = size_ / 2; x < size_; x++) {
             ++operations_amount_;
-			if (!arr_[y][x]) {
+			if (!matrix_[y][x]) {
 				if (squares_amount_ >= min_amount) {
 					return false;
 				}
@@ -87,8 +87,8 @@ void Field::Backtrace() {
 
 
 void Field::Init() {
-    arr_.resize(size_);
-    for(auto& line: arr_) {
+    matrix_.resize(size_);
+    for(auto& line: matrix_) {
         line.resize(size_);
         for(auto& cell: line) {
             cell = 0;
@@ -97,11 +97,11 @@ void Field::Init() {
 }
 
 bool Field::CheckEnoughPlace(int start_x, int start_y) {
-	if (start_y + cur_square_size_ > size_ || start_y < 0) { return false; }
-	if (start_x + cur_square_size_ > size_ || start_x < 0) { return false; }
+    if (start_y + cur_square_size_ > size_ || start_y < 0) return false;
+    if (start_x + cur_square_size_ > size_ || start_x < 0) return false;
     for (int y = start_y; y < start_y + cur_square_size_; y++) {
 		for (int x = start_x; x < start_x + cur_square_size_; x++) {
-			if(arr_[y][x]) {
+			if(matrix_[y][x]) {
                 return false;
             }
 		}
@@ -117,7 +117,7 @@ void Field::DeleteSquare() {
     for (int y = last_square.y; y < last_square.y + last_square.size; y++) {
 		for (int x = last_square.x; x < last_square.x + last_square.size; x++) {
             ++operations_amount_;
-			arr_[y][x] = 0;
+			matrix_[y][x] = 0;
 		}
 	}
 }
