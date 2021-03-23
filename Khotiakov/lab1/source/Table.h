@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <vector>
-using namespace std;
 
 class Table
 {
     int N;
     int minCounter;
-    vector<pair<int, pair<int, int>>> resArr;
-    vector<vector<bool>> mainArr;
+    std::vector<std::pair<int, std::pair<int, int>>> resArr;
+    std::vector<std::vector<bool>> mainArr;
 
 public:
     Table(int N) : N(N), minCounter(N * N), mainArr(N)
@@ -23,11 +22,11 @@ public:
 
     void removeBlock(int, int, int);
 
-    pair<int, int> findEmpty();
+    std::pair<int, int> findEmpty();
 
-    pair<int, bool> findMaxSize(int, int);
+    std::pair<int, bool> findMaxSize(int, int);
 
-    void chooseBlock(vector<pair<int, pair<int, int>>> &, int, int, int);
+    void chooseBlock(std::vector<std::pair<int, std::pair<int, int>>> &, int, int, int);
 
     void primeNumber();
 

@@ -4,7 +4,7 @@ int main()
 {
 
     int N;
-    cin >> N;
+    std::cin >> N;
     Table table(N);
 
     if (N % 2 == 0)
