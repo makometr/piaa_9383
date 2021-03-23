@@ -22,6 +22,7 @@ class Squaring {
   void baseCase2();
   void eval();
   void printResult();
+  void printSquares(const std::stack<Square>&) const;
   friend std::ostream& operator<<(std::ostream& os, Squaring& squaring);
   bool complete();
   void pop();
