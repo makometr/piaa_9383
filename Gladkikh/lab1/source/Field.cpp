@@ -33,12 +33,12 @@ void Field::PlaceSquare(int x, int y) {
 
     squares_amount_++;
 
-	for (int i = y; i < y + cur_square_size_; i++) {
-		for (int j = x; j < x + cur_square_size_; j++) {
+    for (int i = y; i < y + cur_square_size_; i++) {
+        for (int j = x; j < x + cur_square_size_; j++) {
             ++operations_amount_;
             matrix_[i][j] = squares_amount_;
-		}
-	}
+        }
+    }
 
 	square_stack_.push({ x, y, cur_square_size_ });
 
@@ -47,11 +47,11 @@ void Field::PlaceSquare(int x, int y) {
 
 bool Field::Fill(int min_amount) {
 	for (int y = size_ / 2; y < size_; y++) {
-		for (int x = size_ / 2; x < size_; x++) {
+        for (int x = size_ / 2; x < size_; x++) {
             ++operations_amount_;
-			if (!matrix_[y][x]) {
-				if (squares_amount_ >= min_amount) {
-					return false;
+            if (!matrix_[y][x]) {
+                if (squares_amount_ >= min_amount) {
+                    return false;
 				}
                 while(!CheckEnoughPlace(x, y)) {
                     --cur_square_size_;
@@ -99,13 +99,15 @@ void Field::Init() {
 bool Field::CheckEnoughPlace(int start_x, int start_y) {
     if (start_y + cur_square_size_ > size_ || start_y < 0) return false;
     if (start_x + cur_square_size_ > size_ || start_x < 0) return false;
+
     for (int y = start_y; y < start_y + cur_square_size_; y++) {
-		for (int x = start_x; x < start_x + cur_square_size_; x++) {
-			if(matrix_[y][x]) {
+        for (int x = start_x; x < start_x + cur_square_size_; x++) {
+            if(matrix_[y][x]) {
                 return false;
             }
-		}
-	}
+        }
+    }
+
     return true;
 }
 
@@ -115,9 +117,9 @@ void Field::DeleteSquare() {
     --squares_amount_;
 
     for (int y = last_square.y; y < last_square.y + last_square.size; y++) {
-		for (int x = last_square.x; x < last_square.x + last_square.size; x++) {
+        for (int x = last_square.x; x < last_square.x + last_square.size; x++) {
             ++operations_amount_;
-			matrix_[y][x] = 0;
-		}
-	}
+            matrix_[y][x] = 0;
+        }
+    }
 }
