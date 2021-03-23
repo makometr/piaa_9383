@@ -1,12 +1,4 @@
 #include "header.hpp"
-Square createSquare(const int y, const int x, const size_t size)
-{
-    Square square;
-    square.size = size;
-    square.x = x;
-    square.y = y;
-    return square;
-}
 /*void printTable(const Table table)
 {
     for (int i = 0; i < table.size(); i++)
@@ -20,7 +12,14 @@ Square createSquare(const int y, const int x, const size_t size)
     std::cout << '\n';
 }*/
 
-bool checkPlaceForSquare(const Coordinate coord, const size_t size, const Table table)
+Square::Square(integer y,integer x, integer size)
+{
+    this->y=y;
+    this->x=x;
+    this->size=size;
+}
+
+bool checkPlaceForSquare(const Coordinate& coord,integer size, const Table& table)
 {
     try
     {
@@ -32,9 +31,9 @@ bool checkPlaceForSquare(const Coordinate coord, const size_t size, const Table 
         {
             return false;
         }
-        for (int i = coord.first; i < coord.first + size; i++)
+        for (integer i = coord.first; i < coord.first + size; i++)
         {
-            for (int j = coord.second; j < coord.second + size; j++)
+            for (integer j = coord.second; j < coord.second + size; j++)
             {
                 if (table[i][j] == 1)
                 {
@@ -59,9 +58,9 @@ void addSquare(const Square& square, Table& table, Solution& solution)
             throw(0);
         }
     
-        for (int i = square.y; i < square.y + square.size; i++)
+        for (integer i = square.y; i < square.y + square.size; i++)
         {
-            for (int j = square.x; j < square.x + square.size; j++)
+            for (integer j = square.x; j < square.x + square.size; j++)
             {
                 if(table[i][j]==1)
                 {
@@ -79,7 +78,7 @@ void addSquare(const Square& square, Table& table, Solution& solution)
     }
 }
 
-void dellSquare(Table& table, Solution& solution)
+void delSquare(Table& table, Solution& solution)
 {
     Square square = solution.top();
     try
@@ -92,9 +91,9 @@ void dellSquare(Table& table, Solution& solution)
         {
             throw 0;
         }
-        for (int i = square.y; i < square.y + square.size; i++)
+        for (integer i = square.y; i < square.y + square.size; i++)
         {
-            for (int j = square.x; j < square.x + square.size; j++)
+            for (integer j = square.x; j < square.x + square.size; j++)
             {
                 if(table[i][j]==0)
                 {
@@ -107,7 +106,7 @@ void dellSquare(Table& table, Solution& solution)
     }
     catch(int)
     {
-        std::cerr<<"error (dellSquare())"<<'\n';
+        std::cerr<<"error (delSquare())"<<'\n';
         exit(0);
     }
 
@@ -117,17 +116,17 @@ void dellSquare(Table& table, Solution& solution)
 
 std::optional<Coordinate> nextCoordinate(const Table& table)
 {
-    const size_t N = table.size();
-    for (size_t i = N / 2 + 1; i < N; i++)
+    const integer N = table.size();
+    for (integer i = N / 2 + 1; i < N; i++)
     {
         if (table[N / 2][i] == 0)
         {
             return Coordinate(N / 2, i);
         }
     }
-    for (size_t i = N / 2 + 1; i < N; i++)
+    for (integer i = N / 2 + 1; i < N; i++)
     {
-        for (size_t j = N / 2; j < N; j++)
+        for (integer j = N / 2; j < N; j++)
         {
             if (table[i][j] == 0)
             {
@@ -138,30 +137,33 @@ std::optional<Coordinate> nextCoordinate(const Table& table)
     return std::nullopt;
 }
 
+bool isBadSolution(const Solution &tempSolution,const Solution &bestSolution, integer minSize)
+{
+    return tempSolution.size() >= bestSolution.size()-1 && bestSolution.size()!=0 || tempSolution.size()> minSize-1 && bestSolution.size()==0;
+}
 
 
 
-
-void Process(Table& table, Solution& tempSolution, Solution& bestSolution)
+void backTracking(Table& table, Solution& tempSolution, Solution& bestSolution)
 {
     StackBacktrack Stack;
-    const int startSize=1;
+    const integer startSize=1;
     Coordinate tempCoord = nextCoordinate(table).value();
     Stack.push(Pair(startSize,tempCoord));
-    const unsigned short minSizeBestSolution = table.size() +3;
+    const integer minSizeBestSolution = table.size() +3;
     while (!Stack.empty())
     {
-        if (tempSolution.size() >= bestSolution.size()-1 && bestSolution.size()!=0 || tempSolution.size()> minSizeBestSolution-1 && bestSolution.size()==0)
+        if (isBadSolution(tempSolution,bestSolution,minSizeBestSolution))
         {
-            dellSquare(table, tempSolution);
+            delSquare(table, tempSolution);
             Stack.pop();
             continue;
         }
         tempCoord = Stack.top().second;
-        int sizeSquare = Stack.top().first;
+        integer sizeSquare = Stack.top().first;
         if (checkPlaceForSquare(tempCoord, sizeSquare, table))
         {
-            addSquare(createSquare(tempCoord.first, tempCoord.second, sizeSquare), table, tempSolution);
+            addSquare(Square(tempCoord.first, tempCoord.second, sizeSquare), table, tempSolution);
             std::optional<Coordinate> coord = nextCoordinate(table);
             if (coord)
             {
@@ -172,14 +174,14 @@ void Process(Table& table, Solution& tempSolution, Solution& bestSolution)
             else
             {
                 bestSolution = tempSolution;
-                dellSquare(table, tempSolution);
-                dellSquare(table, tempSolution);
+                delSquare(table, tempSolution);
+                delSquare(table, tempSolution);
                 Stack.pop();
             }
         }
         else
         {
-            dellSquare( table, tempSolution);
+            delSquare( table, tempSolution);
             Stack.pop();
             continue;
         }
@@ -188,52 +190,52 @@ void Process(Table& table, Solution& tempSolution, Solution& bestSolution)
 
 Solution evenFillTable(Table& table)
 {
-    const size_t N = table.size();
+    const integer N = table.size();
     Solution result;
-    addSquare(createSquare(0, 0, N / 2), table, result);
-    addSquare(createSquare(0, N / 2 , N / 2), table, result);
-    addSquare(createSquare(N / 2, 0, N / 2),table, result);
-    addSquare(createSquare(N / 2, N / 2, N / 2), table, result);
+    addSquare(Square(0, 0, N / 2), table, result);
+    addSquare(Square(0, N / 2 , N / 2), table, result);
+    addSquare(Square(N / 2, 0, N / 2),table, result);
+    addSquare(Square(N / 2, N / 2, N / 2), table, result);
     
     return result;
 }
 Solution multipleOfThreeFillTable(Table& table)
 {
-    const size_t N = table.size();
+    const integer N = table.size();
     Solution result;
-    addSquare(createSquare(0, 0, N * 2 / 3), table, result);
-    addSquare(createSquare(0, N * 2 / 3, N * 1 / 3), table, result);
-    addSquare(createSquare(N * 1 / 3, N * 2 / 3, N * 1 / 3), table, result);
-    addSquare(createSquare(N * 2 / 3, N * 2 / 3, N * 1 / 3), table, result);
-    addSquare(createSquare(N * 2 / 3, 0, N * 1 / 3), table, result);
-    addSquare(createSquare(N * 2 / 3, N * 1 / 3, N * 1 / 3), table, result);
+    addSquare(Square(0, 0, N * 2 / 3), table, result);
+    addSquare(Square(0, N * 2 / 3, N * 1 / 3), table, result);
+    addSquare(Square(N * 1 / 3, N * 2 / 3, N * 1 / 3), table, result);
+    addSquare(Square(N * 2 / 3, N * 2 / 3, N * 1 / 3), table, result);
+    addSquare(Square(N * 2 / 3, 0, N * 1 / 3), table, result);
+    addSquare(Square(N * 2 / 3, N * 1 / 3, N * 1 / 3), table, result);
     return result;
 }
 Solution multipleOfFiveFillTable(Table& table)
 {
-    const size_t N = table.size();
+    const integer N = table.size();
     Solution result;
-    addSquare(createSquare(0, 0, N * 3 / 5), table, result);
-    addSquare(createSquare(0, N * 3 / 5, N * 2 / 5), table, result);
-    addSquare(createSquare(N * 3 / 5, 0, N * 2 / 5), table, result);
-    addSquare(createSquare(N * 3 / 5, N * 3 / 5, N * 2 / 5), table, result);
-    addSquare(createSquare(N * 2 / 5, N * 3 / 5, N * 1 / 5), table, result);
-    addSquare(createSquare(N * 2 / 5, N * 4 / 5, N * 1 / 5), table, result);
-    addSquare(createSquare(N * 3 / 5, N * 2 / 5, N * 1 / 5), table, result);
-    addSquare(createSquare(N * 4 / 5, N * 2 / 5, N * 1 / 5), table, result);
+    addSquare(Square(0, 0, N * 3 / 5), table, result);
+    addSquare(Square(0, N * 3 / 5, N * 2 / 5), table, result);
+    addSquare(Square(N * 3 / 5, 0, N * 2 / 5), table, result);
+    addSquare(Square(N * 3 / 5, N * 3 / 5, N * 2 / 5), table, result);
+    addSquare(Square(N * 2 / 5, N * 3 / 5, N * 1 / 5), table, result);
+    addSquare(Square(N * 2 / 5, N * 4 / 5, N * 1 / 5), table, result);
+    addSquare(Square(N * 3 / 5, N * 2 / 5, N * 1 / 5), table, result);
+    addSquare(Square(N * 4 / 5, N * 2 / 5, N * 1 / 5), table, result);
     return result;
 }
 Solution initialFill(Table& table)
 {
-    const size_t N = table.size();
+    const integer N = table.size();
     Solution result;
-    addSquare(createSquare(0, 0, N / 2 + 1), table, result);
-    addSquare(createSquare(0, N / 2 + 1, N / 2), table, result);
-    addSquare(createSquare(N / 2 + 1, 0, N / 2), table, result);
+    addSquare(Square(0, 0, N / 2 + 1), table, result);
+    addSquare(Square(0, N / 2 + 1, N / 2), table, result);
+    addSquare(Square(N / 2 + 1, 0, N / 2), table, result);
     return result;
 }
 
-Table createTableNxN(const unsigned short N)
+Table createTableNxN(integer N)
 {
     try
     {
@@ -243,7 +245,7 @@ Table createTableNxN(const unsigned short N)
         }
         Table table = Table();
         table.resize(N);
-        std::for_each(table.begin(), table.end(), [N](std::vector<unsigned short>& i)
+        std::for_each(table.begin(), table.end(), [N](std::vector<integer>& i)
             {
                 i.resize(N, 0);
             });
@@ -255,3 +257,4 @@ Table createTableNxN(const unsigned short N)
         exit(0);
     }
 }
+

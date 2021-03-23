@@ -1,5 +1,5 @@
 #include "header.hpp"
-
+#include <fstream>
 
 /*void printTable(const Table table)
 {
@@ -13,18 +13,17 @@
     }
     std::cout << '\n';
 }*/
-Table initTable()
+
+integer getInput()
 {
-    unsigned short N=0;
+    integer N=0;
     while(N<2 || N>40)
     {
         std::cout<<"Input 2<=N<=40: ";
         std::cin >> N;
     }
-    return createTableNxN(N);
+    return N;
 }
-
-
 
 Solution fillTable(Table& table)
 {
@@ -44,29 +43,35 @@ Solution fillTable(Table& table)
     {
         Solution tempSolution = initialFill(table);//расставляет первые три квадрата
         Solution result;
-        auto start = std::chrono::steady_clock().now();
-        Process(table,tempSolution, result);
-        auto end = std::chrono::steady_clock().now();
-        std::cout << "\nTime:" << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << '\n';
+        //auto start = std::chrono::steady_clock().now();
+        backTracking(table,tempSolution, result);
+        //auto end = std::chrono::steady_clock().now();
+        //std::cout << "\nTime:" << std::chrono::duration_cast<std::chrono::microseconds>(end-start).count() << '\n';
         return result;
     }
 }
 
-void printAnswer(Solution best)
+std::ostream& operator<<(std::ostream& out, Solution solution)
 {
-    std::cout << best.size() << '\n';
-    while (!best.empty())
+    out << solution.size() << '\n';
+    while (!solution.empty())
     {
-        std::cout << best.top().x + 1 << ' ' << best.top().y + 1 << ' ' << best.top().size << '\n';
-        best.pop();
+        out << solution.top().x + 1 << ' ' << solution.top().y + 1 << ' ' << solution.top().size << '\n';
+        solution.pop();
     }
+    return out;
 }
 
 
 int main()
 {
-    Table table = initTable();
-    printAnswer(fillTable(table));
+    integer N = getInput();
+    Table table = createTableNxN(N);
+    std::cout<<fillTable(table);
+
+    //std::ofstream file("output.txt");
+    //file<<fillTable(table);
+    //file.close();
     return 0;
 }
 
