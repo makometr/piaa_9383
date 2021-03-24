@@ -33,7 +33,10 @@ void Field::PrintField() {
 		for (int j = 0; j < n; j++) {
 			std::cout << field[j][i] << ' ';
 		}
-		std::cout << '\n';
+		if(field[j][i] < 10) {
+			std::cout << ' ';
+		}
+		std::cout << "\n\n";
 	}
 }
 
@@ -43,7 +46,7 @@ void Field::AddSquare(Square& square) {
 
 	for (int i = square.x; i < square.x + square.size; i++) {
 		for (int j = square.y; j < square.y + square.size; j++) {
-			field[j - 1][i - 1] = square.size;
+			field[j - 1][i - 1] = squares.size() + 1;
 		}
 	}
 
