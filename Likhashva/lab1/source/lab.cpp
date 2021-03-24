@@ -1,9 +1,9 @@
-﻿#include <ctime>
-#include "lab.h"
+﻿#include "lab.h"
 
 Table table;
 
-Square Table::DeleteSquare(const int& size) { //Функция для удаления последнего квадрата
+
+Square Table::DeleteSquare(int size) { //Функция для удаления последнего квадрата
 	if (table.CurrentStack.size() == 0)
 		return Square{ -1, -1, -1 };
 	Square Last = table.CurrentStack.back();
@@ -19,7 +19,7 @@ Square Table::DeleteSquare(const int& size) { //Функция для удале
 
 
 
-Square Table::FreeCell(int size) {  //Функция поиска пустой клетки на столешнице
+Square Table::FindFreeCell(int size) {  //Функция поиска пустой клетки на столешнице
 	for (int i = 0; i < size; ++i) {
 		for (int j = 0; j < size; ++j) {
 			if (table.Field[i][j] == 0)
@@ -41,9 +41,11 @@ Square Table::Place(int size, Square Alleged) { //Функция, которая
 		Result = { size - 1, 0, 0 }; //первый шаг
 	}
 	//Определяем размер квадрата, который будет меньше, чем предыдущий квадрат. Также он должен помещаться на столешницу.
-	while ((SizeOfRes < Result.size) && ((Result.x + SizeOfRes) < size) && ((Result.y + SizeOfRes) < size) && (table.Field[Result.y][Result.x + SizeOfRes] == 0)) {
-		SizeOfRes++;
+	while (SizeOfRes < Result.size && SizeOfRes < size - Result.x && SizeOfRes < size - Result.y) {
+		if(table.Field[Result.y][Result.x + SizeOfRes] == 0)
+			SizeOfRes++;
 	}
+
 	Result.size = SizeOfRes;
 	for (int i = 0; i < Result.size; ++i) { // Расположение квадрата
 		for (int j = 0; j < Result.size; ++j) {
@@ -78,7 +80,7 @@ void Table::Backtracking(int size) {  //Итеративный поиск с в�
 	table.CurrentStack.push_back(ResultPlace);
 	ResultPlace = Place(size, { size - (size + 1) / 2 + 1, (size + 1) / 2, 0 });
 	table.CurrentStack.push_back(ResultPlace);
-	Alleged = FreeCell(size);
+	Alleged = FindFreeCell(size);
 	Alleged.size = size - 1;
 
 	//Начало цикла
@@ -95,7 +97,7 @@ void Table::Backtracking(int size) {  //Итеративный поиск с в�
 				Alleged = DeleteSquare(size); //Квадраты были расположены наилучшим способом
 				break;
 			}
-			Alleged = FreeCell(size); //Подготовка к следующему размещению квадратов
+			Alleged = FindFreeCell(size); //Подготовка к следующему размещению квадратов
 			full = (Alleged.size == -1);
 			Alleged.size = size;
 		}
@@ -118,7 +120,6 @@ void Table::Backtracking(int size) {  //Итеративный поиск с в�
 		table.BestStack[i].size *= div;
 	}
 }
-
 
 
 int main() {
