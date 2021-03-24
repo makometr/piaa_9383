@@ -1,13 +1,23 @@
 #include "square.h"
 
-int stack[20][3];
-int answer[20][3];
-int rectMap[400];
-bool type; // 0 - Square, 1 - Rectangle
-int width, height, solve;
+Square::Square()
+{
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 3; j++) {
+            stack[i][j] = 0;
+            answer[i][j] = 0;
+        }
+    }
+    for (int i = 0; i < 400; i++) {
+        rectMap[i] = 0;
+    }
+    width = 0;
+    height = 0;
+    type = false;
+    solve = 0;
+}
 
-// Recursive backtracking 
-void backtracking(int square[3], int& count, int& min)
+void Square::backtracking(int square[3], int& count, int& min)
 {
     if (count >= min && !pop_back(square, count)) {
         return;
@@ -27,13 +37,12 @@ void backtracking(int square[3], int& count, int& min)
     backtracking(square, count, min);
 }
 
-// Find max sided square to fit map
-void findSquare(const int x, const int y, int& w)
+void Square::findSquare(const int x, const int y, int& w)
 {
     if (w <= std::min(width, height) - 1) {
         if (x + w > width || y + w > height) {
             w--;
-            return; 
+            return;
         }
         if (type) {
             for (int* i = &rectMap[x + y * width]; i != &rectMap[x + y * width + w]; ++i) {
@@ -51,25 +60,24 @@ void findSquare(const int x, const int y, int& w)
         }
         w++;
         findSquare(x, y, w);
+        return;
     }
-    else{
+    else {
         w--;
         return;
     }
 }
 
-// Remove square from map 
-void removeSquare(const int square[3])
+void Square::removeSquare(const int square[3])
 {
     for (int* i = &rectMap[square[0] + square[1] * width]; i != &rectMap[square[0] + square[1] * width + square[2]]; ++i) {
         for (int j = 0; j < square[2]; ++j) {
             *(i + j * width) = 0;
         }
-    }    
+    }
 }
 
-// Place square on map
-void placeSquare(const int square[3])
+void Square::placeSquare(const int square[3])
 {
     for (int* i = &rectMap[square[0] + square[1] * width]; i != &rectMap[square[0] + square[1] * width + square[2]]; ++i) {
         for (int j = 0; j < square[2]; ++j) {
@@ -78,26 +86,23 @@ void placeSquare(const int square[3])
     }
 }
 
-// Write answer for new best solution
-void updateAnswer(const int square_size)
+void Square::updateAnswer(const int square_size)
 {
     for (size_t i = 0; i < square_size; ++i) {
         answer[i][0] = stack[i][0];
         answer[i][1] = stack[i][1];
         answer[i][2] = stack[i][2];
-    }    
+    }
 }
 
-// Print best solution
-void printAnswer(const int size)
+void Square::printAnswer(const int size)
 {
     for (int i = 0; i < size; ++i) {
         std::cout << answer[i][0] + 1 << " " << answer[i][1] + 1 << " " << answer[i][2] << std::endl;
-    }    
+    }
 }
 
-// Remove last element from stack
-bool pop_back(int square[3], int& count)
+bool Square::pop_back(int square[3], int& count)
 {
     while (count) {
         count--;
@@ -116,17 +121,21 @@ bool pop_back(int square[3], int& count)
     return false;
 }
 
-// Add new element to stack
-void push_back(int* square, int& count)
+bool Square::push_back(int* square, int& count)
 {
-    stack[count][0] = square[0];
-    stack[count][1] = square[1];
-    stack[count][2] = square[2];
-    count++;    
+    if (count < 20) {
+        stack[count][0] = square[0];
+        stack[count][1] = square[1];
+        stack[count][2] = square[2];
+        count++;
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
-// Jump on map by square sides to find empty spot
-bool isEmptySquares(int* square)
+bool Square::isEmptySquares(int* square)
 {
     int index = square[0] + square[1] * width;
     while (index < height * width) {
@@ -139,15 +148,12 @@ bool isEmptySquares(int* square)
         }
         index += rectMap[index];
     }
-    return false;    
+    return false;
 }
 
-// set map #FOR TEST ONLY!
-void setMap(std::vector<std::vector<int>> square, int n, int m)
+void Square::squareset(int n, int m, bool t)
 {
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < m; j++){
-            rectMap[j + i * width] = square[i][j];
-        }
-    }
+	width = n;
+	height = m;
+    type = t;
 }
