@@ -1,3 +1,6 @@
+from time import time
+
+
 class Rect:
 	x = 0
 	y = 0
@@ -42,7 +45,7 @@ def find_free_rect(squares, y_min):
 
 
 
-def update(squares, y_min):
+def update_squares(squares, y_min):
 	while squares and squares[-1].width == 1:
 		new_square = squares[-1]
 		squares.pop()
@@ -67,7 +70,7 @@ def update(squares, y_min):
 
 
 
-def solve(W,H):
+def backtracking(W,H):
 	y_min = [H]*(W)
 	squares = []
 	min_solution = []
@@ -77,7 +80,7 @@ def solve(W,H):
 		free_rectangle = find_free_rect(squares, y_min)
 		
 		if min_solution and len(squares) > len(min_solution):
-			squares, y_min = update(squares, y_min)
+			squares, y_min = update_squares(squares, y_min)
 			if not squares: break
 
 		elif free_rectangle.height > 0:
@@ -98,7 +101,7 @@ def solve(W,H):
 			elif len(min_solution) == len(squares):
 				count += 1
 
-			squares,	 y_min = update(squares, y_min)
+			squares, y_min = update_squares(squares, y_min)
 			if not squares: break
 
 	return (min_solution, count)
@@ -111,10 +114,14 @@ if __name__ == '__main__':
 	M = int(input())
 
 	if N >= 2 and M >= 2:
-		solution = solve(N, M)
+		start_time = time()
+
+		solution = backtracking(N, M)
 		print('Number of squares:', len(solution[0]))
 		print('Number of solutions:', solution[1])
-		input()
+
+		end_time = time()
+
+		print("Time:", end_time-start_time)
 	else:
 		print('2 <= N,M <= 20')
-		input()
