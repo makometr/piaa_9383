@@ -53,7 +53,7 @@ int main() {
         }
     }
 
-    std::cout << "Enter the necessary squares:" << std::endl;
+    std::cout << "Enter the required squares:" << std::endl;
     for (int i = 0; i < n * n; ++i) {
         int x;
         std::cin >> x;
