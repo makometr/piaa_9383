@@ -39,7 +39,8 @@ void Backtracking(int x, int y, Field& currentField, Field& minField) {
 
 
 int main() {
-    int n; std::cin >> n;
+    int n;
+    std::cin >> n;
 
     Field minField(n);
     Field currentField(n);
@@ -54,10 +55,11 @@ int main() {
 
     std::cout << "Enter the necessary squares:" << std::endl;
     for (int i = 0; i < n * n; ++i) {
-        int x, y, width;
+        int x;
         std::cin >> x;
         if (x == -1)
             break;
+        int y, width;
         std::cin >> y >> width;
 
         square = { x, y, width };
