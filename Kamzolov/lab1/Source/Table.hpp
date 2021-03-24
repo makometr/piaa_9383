@@ -27,6 +27,8 @@ class Table {
 
     std::stack<Square> squares;
 
+    bool allowToClear(int x, int y, int side);
+
 public:
     const std::vector <std::vector<int>> getTable() { return table; }
     int getsquaresCounter() { return squaresCounter; }

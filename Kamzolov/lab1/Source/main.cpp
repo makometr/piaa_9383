@@ -4,8 +4,10 @@ using namespace std;
 
 int main() {
     int side;
-    cin >> side;
-    Table a(side);
-    a.running();
-
+    if(cin >> side && side >= 2)
+    {
+        Table a(side);
+        a.running();
+    }
+    cout << "Wrong input!\n";
 }

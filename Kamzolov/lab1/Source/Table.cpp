@@ -157,9 +157,15 @@ bool Table::newSquare() {
     return true;
 }
 
+bool Table::allowToClear(int x, int y, int side) {
+    if (x < 0 || x + side > width) return false;
+    if (y < 0 || y + side > width) return false;
+    if (squares.empty()) return false;
+    return true;
+}
+
 void Table::clearSquare(int x, int y, int side) {
-    if(x < 0 || y < 0 || x + side > width
-        || y + side > width || side < 0 || squares.empty())
+    if(!allowToClear(x, y, side))
         return;
     for(int i = y; i < y + side; i++) {
         for(int j = x; j < x + side; j++) {
