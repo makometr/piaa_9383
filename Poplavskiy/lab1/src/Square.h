@@ -6,13 +6,13 @@
 class Square {
 private:
 	int** coloring; 
-	int* abscissa;  
-	int* ordinate;  
-	int* length;   
-	int  count;      
+	int* abscissa; 
+	int* ordinate; 
+	int* length;    
+	int  count;     
 	int  size;      
 	int  num;        
-	bool f;          
+	bool last_sq;          
 
 	void insert_square(int x, int y, int n, int side);
 	void remove_square(int x, int y, int side);

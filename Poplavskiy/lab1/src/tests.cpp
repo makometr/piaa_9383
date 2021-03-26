@@ -58,7 +58,7 @@ public:
         }
 
         try {
-            BOOST_REQUIRE(table.multiple_of_five() == true);
+            BOOST_REQUIRE(table.multiple_of_five(14) == true);
         }
         catch (...) {
             std::cout << "Test 4 not OK" << std::endl;
@@ -84,3 +84,10 @@ public:
     }
 
 };
+
+int test_main()
+{
+	test untest;
+	untest.check();
+	return 0;
+}
