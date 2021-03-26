@@ -31,14 +31,18 @@ TEST_CASE("UnputLastSquare tests") {
 TEST_CASE("PutSquares borders tests") {
     Field field(5);
 
-    REQUIRE(field.PutSquare({1, 1, 100}) == false);
-    REQUIRE(field.PutSquare({5, 5, 2})   == false);
+    REQUIRE(field.PutSquare({1, 1, 100})               == false);
+    REQUIRE(field.PutSquare({5, 5, 2})                 == false);
 
-    REQUIRE(field.PutSquare({1, 1, 1})   == true);
+    REQUIRE(field.PutSquare({1, 1, 1})                 == true);
     field.UnputLastSquare();
-    REQUIRE(field.PutSquare({3, 3, 1})   == true);
+    REQUIRE(field.PutSquare({3, 3, 1})                 == true);
     field.UnputLastSquare();
-    REQUIRE(field.PutSquare({1, 1, 5})   == true);
+    REQUIRE(field.PutSquare({1, 1, 5})                 == true);
+    field.UnputLastSquare();
+    REQUIRE(field.PutSquare({1000, 1000, 1000})        == false);
+    field.UnputLastSquare();
+    REQUIRE(field.PutSquare({-231, -100000, 1000000})  == false);
     field.UnputLastSquare();
 }
 

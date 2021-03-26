@@ -12,7 +12,8 @@ const std::vector<int>& Field::operator[](int index) const {
 }
 
 bool Field::PutSquare(const Square& square) {
-    if (square.x + square.width > n + 1 || square.y + square.width > n + 1)
+    if (square.x + square.width > n + 1 || square.y + square.width > n + 1
+        || square.x < 1 || square.y < 1 || square.width < 1)
         return false;
 
     for (int i = square.x; i < square.x + square.width; ++i) {
