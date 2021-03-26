@@ -1,0 +1,7 @@
+all: main.o table.o
+	g++ main.o functions.o -o lab1
+
+main.o:
+	g++ -c source/main.cpp source/Table.h -o main.o
+table.o:
+	g++ -c source/Table.cpp source/Table.h -o table.o
