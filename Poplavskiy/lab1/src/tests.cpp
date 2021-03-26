@@ -72,7 +72,8 @@ public:
         }
 
         try {
-            BOOST_REQUIRE(table.multiple_of_five(15) == true);
+            Square table(18);
+            BOOST_REQUIRE(table.insert_the_first_square() == 6);
         }
         catch (...) {
             std::cout << "Test 5 not OK" << std::endl;
