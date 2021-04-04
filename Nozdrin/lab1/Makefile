@@ -10,8 +10,8 @@ all: $(BUILD)/main.o $(BUILD)/Squaring.o
 	@echo "lab1 Builded"
 
 tests: $(BUILD)/Squaring.o $(BUILD)/tests.o
-	@g++ $(FLAGS) $(BUILD)/Squaring.o $(BUILD)/tests.o -o run_tests
-	@echo "run_tests Builded"
+	@g++ $(FLAGS) $(BUILD)/Squaring.o $(BUILD)/tests.o -o run_tests.out
+	@echo "run_tests.out Builded"
 
 $(BUILD)/main.o:  $(SOURCE)/main.cpp
 	@g++ -c $(SOURCE)/main.cpp $(FLAGS) -o $(BUILD)/main.o

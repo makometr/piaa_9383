@@ -3,8 +3,11 @@
 
 int main() {
   int N;
-  std::cin >> N;
-  Squaring squaring(N);
-  squaring.run();
+  if ((std::cin >> N) && (N >=2)) {
+    Squaring squaring(N);
+    squaring.run();
+  } else {
+    std::cout << "Bad input. (enter N >= 2)\n";
+  }
   return 0;
 }

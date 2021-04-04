@@ -30,10 +30,14 @@ bool Squaring::placeSquare(int i, int j, int size) {
     return false;
   if (m_current[i][j] != 0)
     return false;
+  auto maxSize = getMaxSquareSize(i, j);
   if (size == 0) {
-    size = getMaxSquareSize(i, j);
+    size = maxSize;
 //    std::cerr << "placeSquare: size = " << size << "\n";
   }
+//  else if (size > maxSize) {
+//    return false;
+//  }
   m_counter++;
   for (int k_i = 0; k_i < size; k_i++)
     for (int k_j = 0; k_j < size; k_j++)
@@ -64,22 +68,21 @@ void Squaring::eval() {
   }
 }
 void Squaring::run() {
-//  if (m_size % 2 == 0) {
-//    int a = m_size/2;
-//    std::cout<< "4\n1 1 "             << a << '\n';
-//    std::cout<< a+1 <<' '<< 1   <<' ' << a << '\n';
-//    std::cout<< 1   <<' '<< a+1 <<' ' << a << '\n';
-//    std::cout<< a+1 <<' '<< a+1 <<' ' << a << std::endl;
-//    return;
-//  }
-//  if (m_size % 3 == 0) {
-//    multiplier = m_size/3;
-//    m_size = 3;
-//  }
-//  if (m_size % 5 == 0) {
-//    multiplier = m_size/5;
-//    m_size = 5;
-//  }
+  if (m_size % 2 == 0) {
+    int a = m_size / 2;
+    std::cout << "4\n1 1 " << a << '\n';
+    std::cout << a + 1 << ' ' << 1 << ' ' << a << '\n';
+    std::cout << 1 << ' ' << a + 1 << ' ' << a << '\n';
+    std::cout << a + 1 << ' ' << a + 1 << ' ' << a << std::endl;
+    return;
+  }
+  if (m_size % 3 == 0) {
+    multiplier = m_size/3;
+    m_size = 3;
+  } else if (m_size % 5 == 0) {
+    multiplier = m_size/5;
+    m_size = 5;
+  }
   eval();
   printResult();
 }
@@ -115,21 +118,6 @@ void Squaring::baseCase1() {
   m_minimalSquaring = m_counter;
   m_squares_best = m_squares;
   m_best = m_current;
-}
-void Squaring::baseCase2() {
-  for (int i = 0; i < m_size; i++)
-    for (int j = 0; j < m_size; j++) {
-      if ((i < m_size/2+1) && (j < m_size/2+1))
-        m_current[i][j] = 1;
-      else if (j < m_size/2)
-        m_current[i][j] = 2;
-      else if (i < m_size/2)
-        m_current[i][j] = 3;
-    }
-  m_counter = 3;
-  m_squares.push(Square(0, 0, m_size / 2 + 1));
-  m_squares.push(Square(m_size / 2 + 1, 0, m_size / 2));
-  m_squares.push(Square(0, m_size / 2 + 1, m_size / 2));
 }
 std::ostream& operator<<(std::ostream& os, Squaring& squaring) {
   for (int i = 0; i < squaring.m_size; i++) {
@@ -189,7 +177,7 @@ void Squaring::pop() {
   std::cerr << "popped\n";
 #endif // DEBUG
 }
-bool Squaring::backtrack() {
+bool Squaring:: backtrack() {
 #if DEBUG
   std::cerr << "backtrack...\n";
 #endif // DEBUG

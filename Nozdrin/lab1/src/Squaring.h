@@ -19,7 +19,6 @@ class Squaring {
   int getMaxSquareSize(int i, int j);
   bool placeSquare(int i, int j, int size=0);
   void baseCase1();
-  void baseCase2();
   void eval();
   void printResult();
   void printSquares(const std::stack<Square>&) const;
