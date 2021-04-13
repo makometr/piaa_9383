@@ -8,25 +8,28 @@ INCLUDE = -I./Headers/
 
 OBJ_FILES := $(foreach dir,$(VPATH), $(patsubst $(dir)%.cpp, %.o,$(wildcard $(dir)*.cpp)))
 
-all: main Makefile
-	./prog
+greed: main Makefile
+	./prog Greed
+
+star: main Makefile
+	./prog Star
 
 main: main.o API.o
 	$(CC) $(FLAGS) main.o API.o -o prog
 
-test: create_test Makefile
+main.o: main.cpp API.o
+	$(CC) $(FLAGS) -c $(INCLUDE) $<
+
+test: test_comp Makefile
 	./test
 
-create_test: test.o API.o
+test_comp: test.o API.o
 	$(CC) $(FLAGS) test.o API.o -o test
 
-main.o: main.cpp API.h
+test.o: test.cpp API.o
 	$(CC) $(FLAGS) -c $(INCLUDE) $<
 
 API.o: API.cpp API.h
-	$(CC) $(FLAGS) -c $(INCLUDE) $<
-
-test.o: test.cpp API.h
 	$(CC) $(FLAGS) -c $(INCLUDE) $<
 
 clean:
