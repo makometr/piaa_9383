@@ -4,18 +4,18 @@
 #include <vector>
 #include <map>
 #include <queue>
-using namespace std;
+
 
 
 class FindingPath {
 public:
     FindingPath() {};
-    vector<char> GreedyAlgorithm();
+    std::vector<char> GreedyAlgorithm();
     void Read();
 
 private:
-    map<char, vector<pair<char, double>>> graph;
-    map<char, bool> visited;
+    std::map<char, std::vector<std::pair<char, double>>> graph;
+    std::map<char, bool> visited;
     char start;
     char end;
     int number;

@@ -2,18 +2,18 @@
 
 
 void FindingPath::Read() {
-    cout << "Введите начальную и конечную вершины:\n";
+    std::cout << "Введите начальную и конечную вершины:\n";
     char start, end;   
     int count = 0;
-    cin >> start >> end;
+    std::cin >> start >> end;
     this->start = start;
     this->end = end;
-    cout << "Введите ребра графа и их вес:\n";
-    while (cin >> start) {
+    std::cout << "Введите ребра графа и их вес:\n";
+    while (std::cin >> start) {
         if (start == '0')  //символ остановки ввода данных
             break;
         double weight;
-        cin >> end >> weight;
+        std::cin >> end >> weight;
         graph[start].push_back({ end,weight });
         visited[start] = false;
         visited[end] = false;
@@ -24,9 +24,9 @@ void FindingPath::Read() {
 
 
 
-vector<char> FindingPath::GreedyAlgorithm() {
+std::vector<char> FindingPath::GreedyAlgorithm() {
     double min;
-    vector<char> result;
+    std::vector<char> result;
     result.reserve(this->number);
     result.push_back(this->start);
 
@@ -67,11 +67,11 @@ int main() {
     setlocale(LC_ALL, "Russian");
     FindingPath answer;
     answer.Read();
-    vector<char> out = answer.GreedyAlgorithm();
-    cout << "\nРезультат работы жадного алгоритма:\n";
+    std::vector<char> out = answer.GreedyAlgorithm();
+    std::cout << "\nРезультат работы жадного алгоритма:\n";
     for (auto& i : out) {
-        cout << i;
+        std::cout << i;
     }
-    cout << '\n';
+    std::cout << '\n';
     return 0;
 }

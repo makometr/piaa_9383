@@ -2,27 +2,27 @@
 
 
 void FindingPath::Read() {
-    cout << "Введите начальную и конечную вершины:\n";
+    std::cout << "Введите начальную и конечную вершины:\n";
     char start, end, elem;
     double heur;
-    cin >> start >> end;
+    std::cin >> start >> end;
     this->start = start;
     this->end = end;
-    cout << "Введите ребра графа и их вес:\n";
-    while (cin >> start) {
+    std::cout << "Введите ребра графа и их вес:\n";
+    while (std::cin >> start) {
         if (start == '0')  //символ остановки ввода данных
             break;
         double weight;
-        cin >> end >> weight;
+        std::cin >> end >> weight;
         graph[start].push_back({ end, weight });
         visited[start] = false;
         visited[end] = false;
     }
-    cout << "Введите эвристические функции для вершин (<вершина> <эврист. функция>):\n";
-    while (cin >> elem) {
+    std::cout << "Введите эвристические функции для вершин (<вершина> <эврист. функция>):\n";
+    while (std::cin >> elem) {
         if (elem == '0')
             break;
-        cin >> heur;
+        std::cin >> heur;
         if (heur > 0) 
             heuristic[elem] = heur;
         else {
@@ -33,10 +33,10 @@ void FindingPath::Read() {
 }
 
 
-vector<char> FindingPath::AlgorithmAStar() {  //А*
-    map<char, pair<vector<char>, double>> ShortPathes;  //текущие кратчайшие пути
-    vector<char> vertex;
-    priority_queue<pair<char, double>, vector<pair<char, double>>, Sorting> PriorityQueue; //очередь в алгоритме
+std::vector<char> FindingPath::AlgorithmAStar() {  //А*
+    std::map<char, std::pair<std::vector<char>, double>> ShortPathes;  //текущие кратчайшие пути
+    std::vector<char> vertex;
+    std::priority_queue<std::pair<char, double>, std::vector<std::pair<char, double>>, decltype(Sorting)> PriorityQueue(Sorting); //очередь в алгоритме
 
     PriorityQueue.push({ start, 0 });
     vertex.push_back(start);
@@ -53,7 +53,7 @@ vector<char> FindingPath::AlgorithmAStar() {  //А*
         for (auto& i : graph[TmpVertex.first]) {  //рассматриваются все вершины, которые соединены с текущей вершиной
             double CurLength = ShortPathes[TmpVertex.first].second + i.second;
             if (ShortPathes[i.first].second == 0 || ShortPathes[i.first].second > CurLength) { //если пути нет или найденный путь короче
-                vector<char> path = ShortPathes[TmpVertex.first].first;  //добавляется в путь родительской вершины текущая вершина с кратчайшим путем
+                std::vector<char> path = ShortPathes[TmpVertex.first].first;  //добавляется в путь родительской вершины текущая вершина с кратчайшим путем
                 path.push_back(i.first);
                 ShortPathes[i.first] = { path, CurLength };  //обновление пути и расстояния
                 //double heuristic = abs(end - i.first);
@@ -73,14 +73,14 @@ int main() {
     FindingPath answer;
     answer.Read();
     if (answer.check) {
-        cout << "\nЭвристическая функция должна быть неотрицательной! Введите данные заново.\n";
+        std::cout << "\nЭвристическая функция должна быть неотрицательной! Введите данные заново.\n";
         return 0;
     }
-    vector<char> out = answer.AlgorithmAStar();
-    cout << "\nРезультат работы алгоритма А*:\n";
+    std::vector<char> out = answer.AlgorithmAStar();
+    std::cout << "\nРезультат работы алгоритма А*:\n";
     for (auto& i : out) {
-        cout << i;
+        std::cout << i;
     }
-    cout << '\n';
+    std::cout << '\n';
     return 0;
 }
