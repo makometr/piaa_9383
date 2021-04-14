@@ -21,3 +21,4 @@ $(BUILD)/tests_programm.o: $(TEST)/tests_programm.cpp
 
 clean:
 	rm -rf $(BUILD)/
+
