@@ -1,0 +1,6 @@
+a e
+a b 3
+b c 5
+c h 6
+h y 9
+y e 10
