@@ -32,12 +32,40 @@ def check_box(box, ans, skip):
             else:
                 return [y, x, box]
             x += 1
-    return False
+    return [ ]
 
 
 def is_prime(N):
     return N in [7, 11, 13, 17, 19]
 
+def fast_prime(box, min):
+    fast = 0
+    skip = 0
+    skip_box = 0
+
+    if min == 1:
+        box -= 1
+        fast = box-1
+    elif min == 2:
+        fast = box - 1
+        skip = 1
+    elif min == 3:
+        box = 2
+        fast = box-1
+    elif min == 4:
+        box = int(height / 3)
+        if width < 17:
+            fast = box - 1
+        else:
+            skip_box = 1
+            fast = box-2
+    elif min == 5:
+        if width == 19:
+            fast = box - 2
+        else:
+            skip_box = 1
+            fast = box - 3
+    return box ,skip, fast, skip_box
 
 def find_ans(box, min, ans):
     global ans_min
@@ -53,28 +81,11 @@ def find_ans(box, min, ans):
     if min == 0:
         fast = box - 1
     if is_prime(width):
-        if min == 1:
-            box -= 1
-            fast = box-1
-        elif min == 2:
-            fast = box - 1
-            skip = 1
-        elif min == 3:
-            box = 2
-            fast = box-1
-        elif min == 4:
-            box = int(height / 3)
-            if width < 17:
-                fast = box - 1
-            else:
-                skip_box = 1
-                fast = box-2
-        elif min == 5:
-            if width == 19:
-                fast = box - 2
-            else:
-                skip_box = 1
-                fast = box - 3
+        skip_ans = fast_prime(box, min)
+        box = skip_ans[0]
+        skip = skip_ans[1]   
+        fast = skip_ans[2] 
+        skip_box = skip_ans[3]      
 
     for i in range(box - skip_box, 0+fast, -1):
         check = check_box(i, ans, skip)

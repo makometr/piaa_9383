@@ -6,10 +6,10 @@ def check_box(width, height , box, ans):
         while x < width-box+1:
             num = len(ans)
             if ans:
-                for i in ans:
-                    if i[0] <= y and i[1] <= x:
-                        if i[1]+i[2]-1 >= x and i[0]+i[2]-1 >= y:
-                            x += i[2] - 1
+                for i in ans: # ans является списком списков, в которых хранится информация о вставленых квадратах
+                    if i[0] <= y and i[1] <= x: # i является списком из ans, в котором 3 поля, на основании которых
+                        if i[1]+i[2]-1 >= x and i[0]+i[2]-1 >= y: # проверяется можно ли вставить квадрат
+                            x += i[2] - 1                         # аналог for i in range(len(ans)): ans[i]
                             break
                     elif i[0] <= y and i[1] >= x:
                         if x+box-1 >= i[1] and i[0]+i[2]-1 >= y:
@@ -29,7 +29,7 @@ def check_box(width, height , box, ans):
             else:
                 return [y, x, box]
             x += 1
-    return False
+    return []
 
 
 def find_paving(width, height, curent_min, box, min, ans = list()):
