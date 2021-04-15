@@ -99,7 +99,8 @@ std::string algo(std::vector<Node*>& graph, char finish) {
                 neighbour.first->prev = node;
             }
         }
-        graph.erase(graph.begin());
+        std::swap(graph[0], graph[graph.size() - 1]);
+        graph.pop_back();
         std::make_heap(std::begin(graph), std::end(graph), nodeComparator);
     }
     reverse(answer.begin(), answer.end());
