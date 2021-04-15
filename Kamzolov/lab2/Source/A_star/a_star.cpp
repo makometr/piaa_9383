@@ -2,13 +2,13 @@
 
 
 
-int heuristic(char& start, char& finish) {
+int heuristic(char start, char finish) {
     return abs(start - finish);
 }
 
 std::string vecToString(std::vector<Node*>& vec) {
-    std::string ans = "";
-    std::string vertex = "";
+    std::string ans;
+    std::string vertex;
     for (auto& node : vec) {
         vertex = node->vertex;
         ans += "vertex: " + vertex + ", "
@@ -22,14 +22,14 @@ std::string vecToString(std::vector<Node*>& vec) {
     return ans;
 }
 
-int customFind(std::vector<Node*>& graph, char& vertex) {
+int customFind(std::vector<Node*>& graph, char vertex) {
     for (size_t i = 0; i < graph.size(); i++) {
         if (graph[i]->vertex == vertex) return i;
     }
     return -1;
 }
 
-void initGraph(std::vector<Node*>& graph, char& start, char& finish, std::istream& in) {
+void initGraph(std::vector<Node*>& graph, char start, char finish, std::istream& in) {
     char curVertex, neighbourVertex;
     float edgeLength;
 
@@ -70,7 +70,7 @@ void initGraph(std::vector<Node*>& graph, char& start, char& finish, std::istrea
     }
 }
 
-std::string algo(std::vector<Node*>& graph, char& finish) {
+std::string algo(std::vector<Node*>& graph, char finish) {
 
     auto nodeComparator = [](
         const Node* lhs,
@@ -83,13 +83,9 @@ std::string algo(std::vector<Node*>& graph, char& finish) {
         return false;
     };
 
-    std::make_heap(
-        std::begin(graph),
-        std::end(graph),
-        nodeComparator
-    );
+    std::make_heap(std::begin(graph), std::end(graph), nodeComparator);
 
-    std::string answer = "";
+    std::string answer;
     while(!graph.empty()) {
         //std::cout << vecToString(graph);
         Node* node = graph.front();
@@ -112,11 +108,7 @@ std::string algo(std::vector<Node*>& graph, char& finish) {
             }
         }
         graph.erase(graph.begin());
-        std::make_heap(
-            std::begin(graph),
-            std::end(graph),
-            nodeComparator
-        );
+        std::make_heap(std::begin(graph), std::end(graph), nodeComparator);
     }
     reverse(answer.begin(), answer.end());
     if(answer.empty())
