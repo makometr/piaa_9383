@@ -1,17 +1,55 @@
 #include "graph.hpp"
 
 
-Graph::Graph(char start_vertex, char end_vertex, std::istream& in) {
+Graph::Graph(char start_vertex, char end_vertex) {
     start_vertex_symbol_ = start_vertex;
     end_vertex_symbol_ = end_vertex;
+}
 
-    input_error_ = false;
+bool Graph::read_edges(std::istream& in) {
+    char edge_start_name, edge_end_name;
+    float edge_weight;
 
-    read_edges(in);
+    Vertex* first_vertex;
+    Vertex* second_vertex;
+
+
+    while (in >> edge_start_name >> edge_end_name >> edge_weight) {
+
+        if(edge_weight < 0.0 || !isalpha(edge_start_name) || !isalpha(edge_end_name)) {
+            utility_vector_ = vertices_arr_;
+            return false;
+        }
+
+        first_vertex = get_vertex_from_vector(edge_start_name);
+        if(!first_vertex) {
+            first_vertex = new Vertex({edge_start_name});
+            vertices_arr_.push_back(first_vertex);
+        }
+
+        second_vertex = get_vertex_from_vector(edge_end_name);
+        if(!second_vertex) {
+            second_vertex = new Vertex({edge_end_name});
+            vertices_arr_.push_back(second_vertex);
+        }
+
+
+        first_vertex->edges_arr.push_back({second_vertex, edge_weight});
+
+        if(in.eof()) {
+            break;
+        }
+
+    }
+
+    if(vertices_arr_.size() == 0) return false;
+
+    utility_vector_ = vertices_arr_;
+    return true;
 }
 
 std::string Graph::find_path_a_star() {
-    if(vertices_arr_.size() < 2 || input_error_) return "Error";
+    if(vertices_arr_.size() < 2) return "Error";
 
     auto vertex_pair_cmp = [](Vertex* left, Vertex* right) -> bool {
         if (left->priority == right->priority && left->name < right->name)
@@ -62,7 +100,7 @@ std::string Graph::find_path_a_star() {
 }
 
 std::string Graph::find_path_greedy() {
-    if(vertices_arr_.size() < 2 || input_error_) return "Error";
+    if(vertices_arr_.size() < 2) return "Error";
 
     auto vertex_pair_cmp = [](Vertex* left, Vertex* right) -> bool {
         return left->priority > right->priority;
@@ -104,57 +142,15 @@ std::string Graph::find_path_greedy() {
     }
         
     reverse(path_.begin(), path_.end());
-
+    
     if(vertices_arr_.empty() || path_[0] != start_vertex_symbol_)
         return "no path";
     
     return path_;
 }
 
-void Graph::read_edges(std::istream& in) {
-    char edge_start_name, edge_end_name;
-    float edge_weight;
-
-    Vertex* first_vertex;
-    Vertex* second_vertex;
-
-    while (in >> edge_start_name >> edge_end_name >> edge_weight) {
-
-        if(edge_weight < 0.0 || !isalpha(edge_start_name) || !isalpha(edge_end_name)) {
-            input_error_ = true;
-            return;
-        }
-
-        first_vertex = get_vertex_from_vector(edge_start_name);
-        if(!first_vertex) {
-            first_vertex = new Vertex({edge_start_name});
-            vertices_arr_.push_back(first_vertex);
-        }
-
-        second_vertex = get_vertex_from_vector(edge_end_name);
-        if(!second_vertex) {
-            second_vertex = new Vertex({edge_end_name});
-            vertices_arr_.push_back(second_vertex);
-        }
-
-
-        first_vertex->edges_arr.push_back({second_vertex, edge_weight});
-
-        if(in.eof()) {
-            break;
-        }
-
-    }
-
-    if(vertices_arr_.size() == 0) {
-        input_error_ = true;
-    }
-
-    utility_vector_ = vertices_arr_;
-}
-
 std::string Graph::print_vector_to_string() {
-    std::string out = "";
+    std::string out;
     for (const auto& cur_vertex : vertices_arr_) {
         out += cur_vertex->name;
         out += " = [ ";

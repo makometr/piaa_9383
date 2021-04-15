@@ -23,24 +23,20 @@ struct Edge{
 class Graph{
 public:
 
-    Graph(char start_vertex, char end_vertex, std::istream& in);
+    Graph(char start_vertex, char end_vertex);
     ~Graph();
 
     std::string find_path_a_star();
     std::string find_path_greedy();
 
-    void read_edges(std::istream& in);
+    bool read_edges(std::istream& in);
 
     std::string print_vector_to_string();
-
-    bool check_input_error() { return input_error_; };
 
     float heuristics(const char& start, const char& finish);
 
 private:
     char start_vertex_symbol_, end_vertex_symbol_;
-
-    bool input_error_;
 
     std::vector<Vertex*> vertices_arr_;
     std::vector<Vertex*> utility_vector_;
