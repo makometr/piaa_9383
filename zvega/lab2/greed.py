@@ -16,7 +16,7 @@ def greed_sort(current, prev, prev_ans, ans):
         if min_ans:
             if len(ans) < len(min_ans):
                 min_ans = ans
-                return ansф
+                return ans
             else:
                 return min_ans
         else:
@@ -75,8 +75,7 @@ def create_list_vertex(list_vertex, graph):
 def create_matrix(matrix_graph, list_vertex, graph):
     for i in range(len(list_vertex)):
         add_matrix = list()
-        for j in range(len(list_vertex)):
-            add_matrix += [0]
+        add_matrix = [0] * len(list_vertex)
         for g in graph:
             if g[0] == list_vertex[i]:
                 add_matrix[list_vertex.index(g[1])] = g[2]

@@ -90,7 +90,7 @@ def create_matrix(matrix_graph, list_vertex, graph):
     return matrix_graph
 
 
-def add_heuristic(list_vertex):
+def read_heuristic(list_vertex):
     list_heuristic = dict()
     for i in list_vertex:
         print('heuristic ', i, ':')
@@ -112,7 +112,7 @@ if __name__ == '__main__':
 
     index_exit = list_vertex.index(way[1])
 
-    list_heuristic = add_heuristic(list_vertex)
+    list_heuristic = read_heuristic(list_vertex)
     print(list_heuristic)
 
     ans = a_star_search(matrix_graph, way[0], way[1])
