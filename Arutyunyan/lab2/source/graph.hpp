@@ -5,6 +5,7 @@
 #include <functional>
 #include <algorithm>
 
+// Вы все верно поняли: я упоролся по шаблонам
 
 template <typename T>
 class Graph {
