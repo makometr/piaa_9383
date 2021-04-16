@@ -30,7 +30,7 @@ def a_star(graph, start, end):
 
 
 
-def read_graph():
+def read_graph(end):
 	graph = {}
 	while True:
 		try:
@@ -45,17 +45,17 @@ def read_graph():
 			graph[start_vertex][end_vertex] = float(weight)
 		else:
 			graph[start_vertex] = {end_vertex: float(weight)}
-		
+
 		if end_vertex not in graph:
 			graph[end_vertex] = {}	
 
 	for i in graph:
-		graph[i] = dict(sorted(graph[i].items(), key=lambda x: x[1], reverse=False))
+		graph[i] = dict(sorted(graph[i].items(), key=lambda x: heuristic(x[0], end), reverse=False))
 	return graph
 
 
 
 if __name__ == '__main__':
 	start, end = input().split(' ')
-	graph = read_graph()
-	print(a_star(graph, start, end))
+	graph = read_graph(end)
+	print(a_star(graph, start, end)) 
