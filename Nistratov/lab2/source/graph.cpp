@@ -115,10 +115,16 @@ void Graph::AStar(){
     startNode = getNodeByName(start);
     startNode->cost = startNode->heuristic;
     Node* currNode;
+    int indexChecker;
 
     while (!nodes.empty()){
-        currNode = getMinNode(); 
-        nodes.erase(nodes.begin() + getIndexByNode(currNode)); 
+        currNode = getMinNode();
+        if ((indexChecker = getIndexByNode(currNode)) != -1){
+            nodes.erase(nodes.begin() + indexChecker); 
+        }
+        else{
+            return;
+        }
 
         if (currNode->name == end){
                 endNode = currNode;
