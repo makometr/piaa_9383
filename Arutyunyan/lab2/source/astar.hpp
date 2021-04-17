@@ -19,7 +19,7 @@ struct Vertex {
 
 template <typename T>
 float Heuristics(T v, T u) {
-    return static_cast<float>(std::abs(v - u));
+    return static_cast<float>(std::abs(u - v));
 }
 
 template <typename T>
