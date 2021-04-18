@@ -1,0 +1,1 @@
+g++ source/lab1.cpp && ./a.out
