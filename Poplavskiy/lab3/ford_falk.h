@@ -6,17 +6,17 @@
 #define COUNT 26
 
 class Ford_Falkerson {
-	int size;								//количество ориентированных ребер
-	char source;							//исток
-	char stock;								//сток
-	char from;								//начальная вершина ребра
-	char to;								//конечная вершина ребра
-	int cost;								//величина потока ребра
-	int delta = 0;							//для сортировки в лексикографическом порядке
-	std::vector<std::vector<int>> graph;	//граф
-	std::vector<std::vector<int>> flows;	//поток
-	std::vector<bool>visited;				//посещенные
-	std::vector<int> way;					//путь
+	int size;					//количество ориентированных ребер
+	char source;					//исток
+	char stock;					//сток
+	char from;					//начальная вершина ребра
+	char to;					//конечная вершина ребра
+	int cost;					//величина потока ребра
+	int delta = 0;					//для сортировки в лексикографическом порядке
+	std::vector<std::vector<int>> graph;		//граф
+	std::vector<std::vector<int>> flows;		//поток
+	std::vector<bool>visited;			//посещенные
+	std::vector<int> way;				//путь
 
 public:
 	Ford_Falkerson(int digit, char symbol) :size(digit), source(symbol), stock(symbol), from(symbol), to(symbol), cost(digit),
