@@ -1,15 +1,16 @@
 from sys import stdin
-
+from collections import namedtuple
+pair = namedtuple('pair', ['first', 'second'])
 
 class Queue:
     def __init__(self):
         self.__data = []
 
     def __compare(self, a, b):
-        if a[1] == b[1]:
-            return a[0] < b[0]
+        if a.second == b.second:
+            return a.first < b.first
         else:
-            return a[1] > b[1]
+            return a.second > b.second
 
     def top(self):
         return self.__data[-1]
@@ -46,27 +47,27 @@ class Graph:
     def a_star(self, start, end):
         shortPath = {}
         queue = Queue()
-        queue.push((start, 0))
+        queue.push(pair(start, 0))
         vector = [start]
         shortPath[start] = (vector, 0)
         while not queue.empty():
-            if queue.top()[0] == end:
+            if queue.top().first == end:
                 return shortPath[end][0]
             temp = queue.top()
             print("Верхний элемент очереди равен {}".format(queue.top()))
             print("Текущая вершина {}".format(temp[0]))
             queue.pop()
-            if temp[0] in self.graph:
-                for i in list(self.graph[temp[0]].keys()):
-                    currentPathLength = shortPath[temp[0]][1] + self.graph[temp[0]][i]
+            if temp.first in self.graph:
+                for i in list(self.graph[temp.first].keys()):
+                    currentPathLength = shortPath[temp.first][1] + self.graph[temp.first][i]
                     if i not in shortPath or shortPath[i][1] > currentPathLength:
                         path = []
-                        for j in shortPath[temp[0]][0]:
+                        for j in shortPath[temp.first][0]:
                             path.append(j)
                         path.append(i)
                         shortPath[i] = (path, currentPathLength)
                         evristic = abs(ord(end) - ord(i))
-                        queue.push((i, evristic + shortPath[i][1]))
+                        queue.push(pair(i, evristic + shortPath[i][1]))
         return shortPath[end][0]
 
 
@@ -93,3 +94,18 @@ if __name__ == '__main__':
     ans = tree.a_star(data[0][0], data[0][1])
     for i in ans:
         print(i, end='')
+
+
+data = []
+for line in stdin:
+    data.append(line.split())
+
+tree = Graph()
+for i in range(len(data)):
+    if i > 0:
+        tree.add_edge(data[i][0], data[i][1], float(data[i][2]))
+tree = priority_sort(tree, data[-1][1])
+
+ans = tree.a_star(data[0][0], data[0][1])
+for i in ans:
+    print(i, end='')
