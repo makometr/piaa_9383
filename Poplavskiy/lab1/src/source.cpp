@@ -2,6 +2,11 @@
 #define N 40
 
 void Square::insert_square(int x, int y, int n, int side) { //заполнение квадрата
+	if ((x > size || x < 0) || (y > size || y < 0))
+	{
+		std::cout << "Incorrect data in insert_square" << std::endl;
+		return;
+	}
 	for (int i = x; i < side + x; i++)
 	{
 		for (int j = y; j < side + y; j++)
@@ -12,6 +17,11 @@ void Square::insert_square(int x, int y, int n, int side) { //заполнени
 }
 
 void Square::remove_square(int x, int y, int side) { //удаление квадрата
+	if ((x > size || x < 0) || (y > size || y < 0))
+	{
+		std::cout << "Incorrect data in remove_square" << std::endl;
+		return;
+	}
 	for (int i = x; i < side + x; i++)
 	{
 		for (int j = y; j < side + y; j++)
