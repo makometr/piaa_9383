@@ -43,20 +43,20 @@ std::string Graph::to_string() {
 }
 
 bool neighbour_cmp(Neighbour a, Neighbour b) {
-	return a.second.flow > b.second.flow;
+    return a.second.flow > b.second.flow;
 }
 
 int Graph::find_flow_path(char start_symbol, char end_symbol, std::map<char, bool> is_visited_map, int flow) {
 
-	if (start_symbol == end_symbol) return flow;
-
-	is_visited_map[start_symbol] = true;
+    if (start_symbol == end_symbol) return flow;
+	
+    is_visited_map[start_symbol] = true;
 
     std::sort(graph_map_[start_symbol].begin(), graph_map_[start_symbol].end(), neighbour_cmp);
 
-	for (auto& neighbour : graph_map_[start_symbol]) {
+    for (auto& neighbour : graph_map_[start_symbol]) {
         neighbour.second.isVisited = false;
-		if (!is_visited_map[neighbour.first] && neighbour.second.flow > 0) {
+	if (!is_visited_map[neighbour.first] && neighbour.second.flow > 0) {
             neighbour.second.isVisited = true;
             Neighbour* ptr;
             for(auto& reverse_neighbour: graph_map_[neighbour.first]) {
@@ -69,8 +69,8 @@ int Graph::find_flow_path(char start_symbol, char end_symbol, std::map<char, boo
             }
 
             flow = neighbour.second.flow;
-			prev_node_map_[neighbour.first] = start_symbol;
-			int found_flow = find_flow_path(neighbour.first, end_symbol, is_visited_map, flow);
+	    prev_node_map_[neighbour.first] = start_symbol;
+            int found_flow = find_flow_path(neighbour.first, end_symbol, is_visited_map, flow);
 
             if(found_flow) {
                 return std::min(flow, found_flow);
@@ -78,15 +78,15 @@ int Graph::find_flow_path(char start_symbol, char end_symbol, std::map<char, boo
 
             neighbour.second.isVisited = false;
             ptr->second.isVisited = false;
-		}
 	}
-	return 0;
+    }
+    return 0;
 
 }
 
 int Graph::ford_fulkerson() {
     
-	prev_node_map_[source_symbol_] = source_symbol_;
+    prev_node_map_[source_symbol_] = source_symbol_;
 
     std::map<char, bool> is_visited_map;
     std::vector<char> path;
