@@ -78,7 +78,7 @@ std::string Star::way(std::map<char, std::vector<std::pair<char, float>>>& graph
             float new_cost = cost_so_far[current] + next.second;
             if (!cost_so_far.count(next.first) || new_cost < cost_so_far[next.first]) {
                 cost_so_far[next.first] = new_cost;
-                float priority = new_cost;
+                float priority = new_cost + heuristic(next.first, end);
                 frontier.emplace(priority, next.first);
                 came_from[next.first] = current;
             }
