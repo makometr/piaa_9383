@@ -51,8 +51,8 @@ class answ{
 using Graph = std::map<char, std::vector<edge>>;
 
 int Search_min(std::string path, Graph G);
-void Read(Graph &G);
-void dec_metrika(Graph &G, std::string path, int min);
+void Read_inform_about_edge(Graph &G);
+void dec_metric(Graph &G, std::string path, int min);
 void create_reverse_edges(Graph &G, std::string path, int min);
 std::string Search_path(Graph &G, char cur, char finish, std::string path);
 bool Check_v(Graph G, char start);

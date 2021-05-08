@@ -1,6 +1,6 @@
 #include "lb3.hpp"
 
-void Read(Graph &G){
+void Read_inform_about_edge(Graph &G){
     char source , dest;
     float metr;
     while (std::cin >> source >> dest >> metr){
@@ -13,10 +13,7 @@ void Read(Graph &G){
             G[source].push_back(g);
 
             std::sort(G[source].begin(), G[source].end(), [] (edge &p1, edge &p2) { //по возрастанию
-            if (p1.name() < p2.name()){
-                return true;
-            }
-            return false;
+            return (p1.name() < p2.name());
             });
         }
     }
@@ -24,7 +21,7 @@ void Read(Graph &G){
 
 }
 
-void dec_metrika(Graph &G, std::string path, int min){
+void dec_metric(Graph &G, std::string path, int min){
 
     //Уменьшаем вес у нынешних
     for (int i = 0; i != path.size() - 1; i++){
@@ -42,7 +39,7 @@ void dec_metrika(Graph &G, std::string path, int min){
 }
 
 int Search_min(std::string path, Graph G){
-    //Ищем минимальный поток
+    //Ищем минимальный вес в пути 
     int min = 10000;
     for (int i = 0; i != path.size() - 1; i++){
         char source = path[i];
@@ -73,21 +70,18 @@ void create_reverse_edges(Graph &G, std::string path, int min){
             G[source] = d;
         } 
         else {     //если есть
-            int flag = 0;
+            int is_find = 0;
             for (int j = 0; j!=G[source].size(); j++){
                 if (G[source][j].name() == dest){  //если есть такое ребро
                     G[source][j].inc(min);
-                    flag = 1;
+                    is_find = 1;
                 }
             }
 
-            if (flag==0){                           //если нет
+            if (is_find==0){                           //если нет
                 G[source].push_back(g);
                 std::sort(G[source].begin(), G[source].end(), [] (edge &p1, edge &p2) { //по возрастанию
-                if (p1.name() < p2.name()){
-                    return true;
-                }
-                return false;
+                return (p1.name() < p2.name());
                 });
             }
 
@@ -181,10 +175,7 @@ std::vector <answ> for_answer(Graph G, Graph G2){
             return true;
         }
         if (p1.source == p2.source){
-            if (p1.dest < p2.dest)
-                return true;
-            else
-                return false; 
+            return (p1.dest < p2.dest);
         }
         return false;
     });
@@ -203,7 +194,7 @@ int Algoritm(Graph &G, char start, char finish){
             break;
         int min = Search_min(path, G); //Ищем ребро с минимальным весом - максимальный поток пути
         max_potok = max_potok + min;
-        dec_metrika(G, path, min); //Уменьшаем вес у нынешних
+        dec_metric(G, path, min); //Уменьшаем вес у нынешних
         create_reverse_edges(G, path, min); //Делаем обратные рёбра
 
         if (path.size()>1){

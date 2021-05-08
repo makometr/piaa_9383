@@ -3,14 +3,14 @@
 #include "../source/lb3.hpp"
 
 
-TEST_CASE("Тест для функции dec_metrika") {
+TEST_CASE("Тест для функции dec_metric") {
 
   SECTION("1 случай") {      
     char start = 'a';
     char finish = 'd';
     Graph G = {{'a', {{'b', 3}, {'c', 5}}}, {'b', {{'d', 2}}}};
 
-    dec_metrika(G, "abd", 2);
+    dec_metric(G, "abd", 2);
     CHECK(G['a'][0].len() == 1);
     CHECK(G['a'][1].len() == 5);
     CHECK(G['b'][0].len() == 0);
@@ -21,7 +21,7 @@ TEST_CASE("Тест для функции dec_metrika") {
     char finish = 'd';
     Graph G = {{'a', {{'b', 3}, {'c', 5}}}, {'b', {{'d', 2}}}, {'c', {{'e', 7}}}, {'e', {{'d', 20}}}};
 
-    dec_metrika(G, "aced", 5);
+    dec_metric(G, "aced", 5);
     CHECK(G['a'][0].len() == 3);
     CHECK(G['a'][1].len() == 0);
     CHECK(G['b'][0].len() == 2);
@@ -34,7 +34,7 @@ TEST_CASE("Тест для функции dec_metrika") {
     char finish = '3';
     Graph G = {{'1', {{'2', 10}, {'4', 5}}}, {'2', {{'3', 15}}}, {'4', {{'5', 7}}}, {'5', {{'6', 2}}}};
 
-    dec_metrika(G, "123", 10);
+    dec_metric(G, "123", 10);
     CHECK(G['1'][0].len() == 0);
     CHECK(G['1'][1].len() == 5);
     CHECK(G['2'][0].len() == 5);
