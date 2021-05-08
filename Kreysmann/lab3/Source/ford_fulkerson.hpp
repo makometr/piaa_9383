@@ -21,7 +21,7 @@ struct cmpVertexes
 };
 using Graph = std::map<Vertex*,std::map<Vertex*,int,cmpVertexes>,cmpVertexes>;
 using Path  = std::vector<Vertex*>;
-void currentResult(Graph flowGraph,Graph graph,Path path,int maxFlow, int pathFlow);
+void currentResult(Path path,int maxFlow, int pathFlow);
 Path findPath(Vertex *start, Vertex *finish,Graph& graph);
 int FordFulkerson(Graph &graph,Graph &originGraph,Vertex*start,Vertex*finish,std::vector<Vertex*> vertexes);
 int indexByName(std::vector<Vertex*> vec,char name);

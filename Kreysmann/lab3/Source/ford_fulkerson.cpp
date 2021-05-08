@@ -1,6 +1,6 @@
 #include "ford_fulkerson.hpp"
 
-void currentResult(Graph flowGraph,Graph graph,Path path,int maxFlow, int pathFlow)
+void currentResult(Path path,int maxFlow, int pathFlow)
 {
     std::cout << "Найденный путь: ";
     for(auto i : path)
@@ -10,16 +10,6 @@ void currentResult(Graph flowGraph,Graph graph,Path path,int maxFlow, int pathFl
     std::cout<<'\n';
 
     std::cout<<"Поток пути: "<<pathFlow<<'\n';
-    std::cout<<"Текущий максимальный поток:"<<maxFlow<<'\n';
-    std::cout<<"Поток через ребра графа:"<<'\n';
-    for(auto i:graph)
-    {
-        for (auto j:i.second)
-        {
-            int flow = std::max(0,j.second - flowGraph[i.first][j.first]);
-            std::cout << i.first->name <<' ' << j.first->name <<' '<< flow <<'\n';
-        }
-    }
 }
 
 Path findPath(Vertex *start, Vertex *finish,Graph& graph)
@@ -65,17 +55,17 @@ int FordFulkerson(Graph &graph,Graph &originGraph,Vertex*start,Vertex*finish,std
 {
     Path path;
     int maxFlow = 0;
+    const int defaultMin=-1;
     while(!((path=findPath(start,finish,graph)).empty()))
     {
-        for(auto i:vertexes)
-        {
-            i->visited=false;
-        }
+        std::for_each(vertexes.begin(),vertexes.end(),[](auto vertex){
+            vertex->visited=false;
+        });
 
-        int min=-1;
+        int min=defaultMin;
         for(int i = 0 ;i<path.size()-1;i++)
         {
-            if(graph[path[i]][path[i+1]]<min  || min==-1)
+            if(graph[path[i]][path[i+1]]<min  || min==defaultMin)
             {
                 min = graph[path[i]][path[i+1]];
             }
@@ -88,7 +78,7 @@ int FordFulkerson(Graph &graph,Graph &originGraph,Vertex*start,Vertex*finish,std
             graph[path[i+1]][path[i]]+=min;
         }
         
-        currentResult(graph,originGraph,path,maxFlow,min);
+        currentResult(path,maxFlow,min);
     }
     return maxFlow;
 }
