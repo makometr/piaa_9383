@@ -4,7 +4,7 @@
 #include <sstream>
 #include <map>
 
-#define EDGE_MAP std::map<char, std::map<char, int>>
+using EDGE_MAP = std::map<char, std::map<char, int>>;
 
 class FFsolver
 {
