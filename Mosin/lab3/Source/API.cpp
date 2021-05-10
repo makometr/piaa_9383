@@ -17,7 +17,7 @@ bool input(int& count, char& start, char& end, std::map<char, std::map<char, int
 std::pair<std::vector<char>, int> path(std::map<char, std::map<char, int>>& rGraph, char s, char t) {
     std::pair<std::vector<char>, int> path_flow;
 
-    std::map<char, std::map<char, int>> transposedGraph = transposition(rGraph);
+    std::map<char, std::map<char, int>> transposedGraph = transpose_graph(rGraph);
 
     std::queue<char> queue_from_start;
     queue_from_start.push(s);
@@ -37,7 +37,7 @@ std::pair<std::vector<char>, int> path(std::map<char, std::map<char, int>>& rGra
         node = queue_from_start.front();
         queue_from_start.pop();
         if (std::find(visited_from_end.begin(), visited_from_end.end(), node) != visited_from_end.end()) {
-            return restore(graph1, graph2, s, t, node);
+            return restore_path(graph1, graph2, s, t, node);
         }
 
         for (auto it : rGraph[node]) {
@@ -51,7 +51,7 @@ std::pair<std::vector<char>, int> path(std::map<char, std::map<char, int>>& rGra
         node = queue_from_end.front();
         queue_from_end.pop();
         if (std::find(visited_from_start.begin(), visited_from_start.end(), node) != visited_from_start.end()) {
-            return restore(graph1, graph2, s, t, node);
+            return restore_path(graph1, graph2, s, t, node);
         }
 
         for (auto it : transposedGraph[node]) {
@@ -66,7 +66,7 @@ std::pair<std::vector<char>, int> path(std::map<char, std::map<char, int>>& rGra
     return path_flow;
 }
 
-std::map<char, std::map<char, int>> transposition(std::map<char, std::map<char, int>>& graph) {
+std::map<char, std::map<char, int>> transpose_graph(std::map<char, std::map<char, int>>& graph) {
     std::map<char, std::map<char, int>> transposedGraph;
     for (auto it : graph) {
         for (auto vertex : it.second) {
@@ -76,7 +76,7 @@ std::map<char, std::map<char, int>> transposition(std::map<char, std::map<char, 
     return transposedGraph;
 }
 
-std::pair<std::vector<char>, int> restore(std::map<char, std::pair<char, int>>& graph1, std::map<char, std::pair<char, int>>& graph2, char s, char t, char node) {
+std::pair<std::vector<char>, int> restore_path(std::map<char, std::pair<char, int>>& graph1, std::map<char, std::pair<char, int>>& graph2, char s, char t, char node) {
     std::vector<char> path;
     int flow = __INT_MAX__;
 
