@@ -1,0 +1,3 @@
+/home/samvelochka/Desktop/Gender studies/ПиАА/piaa_9383/Arutyunyan/lab3/source/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/samvelochka/Desktop/Gender studies/ПиАА/piaa_9383/Arutyunyan/lab3/source/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/samvelochka/Desktop/Gender studies/ПиАА/piaa_9383/Arutyunyan/lab3/source/cmake-build-debug/CMakeFiles/source.dir
