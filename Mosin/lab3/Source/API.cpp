@@ -14,7 +14,7 @@ bool input(int& count, char& start, char& end, std::map<char, std::map<char, int
     return true;
 }
 
-std::pair<std::vector<char>, int> path(std::map<char, std::map<char, int>>& rGraph, char s, char t) {
+std::pair<std::vector<char>, int> get_path(std::map<char, std::map<char, int>>& rGraph, char s, char t) {
     std::pair<std::vector<char>, int> path_flow;
 
     std::map<char, std::map<char, int>> transposedGraph = transpose_graph(rGraph);
@@ -104,7 +104,7 @@ std::pair<int, std::map<char, std::map<char, int>>> FordFulkerson(std::map<char,
     std::map<char, std::map<char, int>> rGraph = graph;
 
     int flow = 0;
-    for(std::pair<std::vector<char>, int> path_flow = path(rGraph, s, t); !path_flow.first.empty(); path_flow = path(rGraph, s, t)) {
+    for(std::pair<std::vector<char>, int> path_flow = get_path(rGraph, s, t); !path_flow.first.empty(); path_flow = get_path(rGraph, s, t)) {
         for (int i = 0; i < path_flow.first.size() - 1; ++i) {
             rGraph[path_flow.first[i]][path_flow.first[i + 1]] -= path_flow.second;
             rGraph[path_flow.first[i + 1]][path_flow.first[i]] += path_flow.second;
