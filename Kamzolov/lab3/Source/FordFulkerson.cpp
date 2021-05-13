@@ -42,13 +42,10 @@ int FordFulkerson::search(char curVertex){
             if(search(neighbour.first)){
                 neighbour.second.used = true;
                 for(auto& rNeighbour : graph[neighbour.first]) {
-                    if(rNeighbour.first == curVertex)
-                    {
-                        if(rNeighbour.second.flow == neighbour.second.capacity){
-                            if(rNeighbour.second.capacity == neighbour.second.flow)
-                                rNeighbour.second.used = true;
-                            }
-                    }
+                    if(rNeighbour.first != curVertex) continue;
+                    if(rNeighbour.second.flow != neighbour.second.capacity) continue;
+                    if(rNeighbour.second.capacity != neighbour.second.flow) continue;
+                    rNeighbour.second.used = true;
                 }
                 return true;
             }
