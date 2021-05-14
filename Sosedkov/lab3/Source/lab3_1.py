@@ -17,7 +17,7 @@ def transpose_graph(graph):
 
 
 def build_path(graph_map, graph_map2, vertex):
-    min_weight=sys.maxsize
+    min_weight = sys.maxsize
     first_path = vertex
     while graph_map[first_path[0]]:
         min_weight = min(min_weight, graph_map[first_path[0]][list(graph_map[first_path[0]].keys())[0]])
@@ -31,7 +31,6 @@ def build_path(graph_map, graph_map2, vertex):
     first_path = first_path[:len(first_path)-1]
     return first_path+second_path, min_weight
 
-    
 
 def find_path(flow_graph, flow_graph_transposed, start, end):
     visited_start = [start]
@@ -68,9 +67,7 @@ def find_path(flow_graph, flow_graph_transposed, start, end):
                     graph_map_end[vertex] = {current : flow_graph_transposed[current][vertex]}
                     queue_end.append(vertex)
 
-    return ('',0)
-
-
+    return ('', 0)
 
 
 def max_flow(original_graph, start, end):
@@ -78,7 +75,7 @@ def max_flow(original_graph, start, end):
     while True:
         path, min_weight = find_path(flow_graph, transpose_graph(flow_graph), start, end)
         if path:
-            for u,v in zip((path)[:-1], (path)[1:]):
+            for u, v in zip((path)[:-1], (path)[1:]):
                 flow_graph[u][v] -= min_weight
                 if u not in flow_graph[v]:
                     flow_graph[v][u] = min_weight
@@ -88,10 +85,8 @@ def max_flow(original_graph, start, end):
             break
 
     return sum([original_graph[start][edge]-flow_graph[start][edge] for edge in flow_graph[start]]), flow_graph
-
-
-
-
+    
+    
 if __name__ == '__main__':
     graph = {}
     number_of_edges = int(input())
@@ -116,6 +111,6 @@ if __name__ == '__main__':
     for v1 in graph:
         for v2 in graph[v1]:
             if graph[v1][v2] - flow_graph[v1][v2] > 0:
-                print(v1,v2, graph[v1][v2] - flow_graph[v1][v2])
+                print(v1, v2, graph[v1][v2] - flow_graph[v1][v2])
             else:
-                print(v1,v2, 0)
+                print(v1, v2, 0)

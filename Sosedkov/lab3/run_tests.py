@@ -25,6 +25,8 @@ with open('./Tests/max_flow_tests', 'r') as reader:
 				graph[v2] = {}
 		current_index += (count+1)
 
+
+
 		flow, flow_graph = lab3.max_flow(graph, start, end)
 		if flow == answer:
 			print("[OK] Test #{}".format(t+1))
@@ -56,7 +58,6 @@ with open('./Tests/find_path_tests', 'r') as reader:
 		current_index += (count+1)
 
 		path, min_weight = lab3.find_path(graph, start, end)
-		print(start+path, answer)
 		if start+path == answer:
 			print("[OK] Test #{}".format(t+1))
 		else:
