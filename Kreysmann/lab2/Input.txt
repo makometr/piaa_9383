@@ -1,0 +1,9 @@
+a z 
+a b 10
+a c 2
+c g 3
+g m 1
+b l 10
+l z 2
+l n 1
+n z 100
