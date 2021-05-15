@@ -29,11 +29,21 @@ public:
     }
 
     template <typename Func>
-    std::deque<char> GetNeighbours(char u, Func predicate = [](char c) { return true; }) const
+    std::deque<char> GetNeighbours(char u, Func predicate) const
     {
         std::deque<char> neighbours;
         for (char i = (offset == 97 ? 'a' : '1'); i <= (offset == 97 ? 'z' : '9'); ++i) {
             if (incident_matrix[u - offset][i - offset] > 0 && predicate(i))
+                neighbours.push_back(i);
+        }
+        return neighbours;
+    }
+
+    std::deque<char> GetNeighbours(char u) const
+    {
+        std::deque<char> neighbours;
+        for (char i = (offset == 97 ? 'a' : '1'); i <= (offset == 97 ? 'z' : '9'); ++i) {
+            if (incident_matrix[u - offset][i - offset] > 0)
                 neighbours.push_back(i);
         }
         return neighbours;

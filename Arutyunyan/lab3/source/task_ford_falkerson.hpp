@@ -5,6 +5,7 @@
 #include <set>
 #include <limits>
 #include <cassert>
+#include <iostream>
 
 struct WebPath {
     std::vector<char> path;
@@ -16,20 +17,6 @@ struct WebPath {
     }
 };
 
-static char FindMinimalEdge(const Graph& graph, char from, const std::deque<char>& neighbours,
-                            const std::set<char>& visited_neighbours) {
-    char max_neighbour = from;
-    float minimal_edge = std::numeric_limits<float>::max();
-    for (char neighbour : neighbours) {
-        if (visited_neighbours.find(neighbour) == visited_neighbours.end() &&
-                    minimal_edge > graph.GetEdgeWeight(from, neighbour)) {
-            max_neighbour = neighbour;
-            minimal_edge = graph.GetEdgeWeight(from, neighbour);
-        }
-    }
-    return max_neighbour;
-}
-
 static inline WebPath FindPath(const Graph& graph,
                               char from,
                               char to,
@@ -40,25 +27,19 @@ static inline WebPath FindPath(const Graph& graph,
         return web_path;
 
     visited.insert(from);
+    auto neighbours = graph.GetNeighbours(from, [&visited](char c) { return visited.find(c) == visited.end(); });
+    std::sort(neighbours.begin(), neighbours.end(), [from](char n1, char n2) { return abs(from - n1) < abs(from - n1); });
 
-    auto neighbours = graph.GetNeighbours(from, [&visited](char v) { return visited.find(v) == visited.end(); });
-    std::reverse(neighbours.begin(), neighbours.end());
-    std::set<char> visited_neighbours;
-    char max_neighbour = FindMinimalEdge(graph, from, neighbours, visited_neighbours);
     bool found = false;
-
-    while (!found && max_neighbour != from) {
-        visited_neighbours.insert(max_neighbour);
-        auto another_path = FindPath(graph, max_neighbour, to, visited);
+    for (char neighbour : neighbours) {
+        auto another_path = FindPath(graph, neighbour, to, visited);
 
         if (another_path.Size() > 0) {
             web_path.path.insert(web_path.path.end(), another_path.path.begin(), another_path.path.end());
-            web_path.minimal_edge = std::min(graph.GetEdgeWeight(from, max_neighbour), another_path.minimal_edge);
+            web_path.minimal_edge = std::min(graph.GetEdgeWeight(from, neighbour), another_path.minimal_edge);
             found = true;
+            break;
         }
-
-        if (!found)
-            max_neighbour = FindMinimalEdge(graph, from, neighbours, visited_neighbours);
     }
 
     if (!found) {

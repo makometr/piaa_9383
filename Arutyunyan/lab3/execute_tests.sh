@@ -1,0 +1,1 @@
+g++ ../../../catch.hpp tests/tests.cpp -o exec_tests && ./exec_tests

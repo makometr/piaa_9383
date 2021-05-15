@@ -15,7 +15,7 @@ int main() {
 
     int n;
     char source, drain;
-    in >> n >> source >> drain;
+    std::cin >> n >> source >> drain;
 
     if (std::isdigit(source))
         graph.SetOffset(48);
@@ -24,7 +24,7 @@ int main() {
         char u, v;
         float weight;
 
-        in >> u >> v >> weight;
+        std::cin >> u >> v >> weight;
 
         graph.AddEdge(u, v, weight);
         to_check.insert({u, v});
@@ -33,6 +33,7 @@ int main() {
 
     auto flow_info = FordFalkerson(graph, source, drain);
 
+    std::cout << "\nОтвет:" << std::endl;
     std::cout << flow_info.second << std::endl;
     for (const auto &edge : to_check) {
         float weight = flow_info.first.GetEdgeWeight(edge.first, edge.second);
