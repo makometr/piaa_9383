@@ -88,6 +88,9 @@
 		<Unit filename="/home/samvelochka/Desktop/Gender studies/ПиАА/piaa_9383/Arutyunyan/lab4/source/main.cpp">
 			<Option target="source"/>
 		</Unit>
+		<Unit filename="/home/samvelochka/Desktop/Gender studies/ПиАА/piaa_9383/Arutyunyan/lab4/source/stringwrapper.hpp">
+			<Option target="source"/>
+		</Unit>
 		<Unit filename="/home/samvelochka/Desktop/Gender studies/ПиАА/piaa_9383/Arutyunyan/lab4/source/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

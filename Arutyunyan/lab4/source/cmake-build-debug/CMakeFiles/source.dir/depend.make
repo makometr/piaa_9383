@@ -3,4 +3,5 @@
 
 CMakeFiles/source.dir/main.cpp.o: ../knutmorrispratt.hpp
 CMakeFiles/source.dir/main.cpp.o: ../main.cpp
+CMakeFiles/source.dir/main.cpp.o: ../stringwrapper.hpp
 
