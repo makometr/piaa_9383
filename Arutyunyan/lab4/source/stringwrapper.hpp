@@ -79,6 +79,16 @@ public:
         return updated;
     }
 
+    std::string MakeString() const {
+        std::string result;
+
+        for (const auto& string_wrapper : strings) {
+            result.append(string_wrapper.data, string_wrapper.size_);
+        }
+
+        return result;
+    }
+
 private:
     std::vector<StringWrapper> strings;
     std::size_t all_size = 0;

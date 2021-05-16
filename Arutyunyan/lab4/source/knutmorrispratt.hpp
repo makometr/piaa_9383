@@ -6,7 +6,7 @@
 #include "stringwrapper.hpp"
 
 
-static inline const bool DEBUG = true;
+static inline const bool DEBUG = false;
 
 
 inline std::vector<int> PrefixFunction(const ConcatenatedStringsWrapper& s) {

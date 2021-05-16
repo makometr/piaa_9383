@@ -9,14 +9,12 @@ int main() {
     std::getline(std::cin, substring);
     std::getline(std::cin, source);
 
-    auto answer = CycleShiftDetect(source, substring);
-    std::cout << "Ответ: " << answer << std::endl;
-//    auto answer = KnutMorrisPratt(source, substring);
-//    std::cout << "Ответ: ";
-//    for (int v : answer) {
-//        std::cout << v << " ";
-//    }
-//    std::cout << std::endl;
+    auto answer = KnutMorrisPratt(source, substring);
+    std::cout << "Ответ: ";
+    for (int v : answer) {
+        std::cout << v << " ";
+    }
+    std::cout << std::endl;
 
     return 0;
 }
