@@ -6,7 +6,10 @@
 #include "stringwrapper.hpp"
 
 
-inline std::vector<int> PrefixFunction(const StringWrapper& s) {
+static inline const bool DEBUG = true;
+
+
+inline std::vector<int> PrefixFunction(const ConcatenatedStringsWrapper& s) {
     std::vector<int> prefix_array(s.size());
 
     for (int i = 1; i < s.size(); ++i) {
@@ -22,13 +25,20 @@ inline std::vector<int> PrefixFunction(const StringWrapper& s) {
     return prefix_array;
 }
 
-inline std::vector<int> KnutMorrisPratt(const std::string& source,
-                                        const std::string& substring) {
+inline std::vector<int> KnutMorrisPratt(const ConcatenatedStringsWrapper& source,
+                                        const ConcatenatedStringsWrapper& substring) {
     std::vector<int> start_indexes;
 
-    auto prefix = PrefixFunction({MiniWrapper{substring.data(), substring.size()},
-                                  MiniWrapper{"#", 1},
-                                  MiniWrapper{source.data(), source.size()}});
+    auto prefix = PrefixFunction(substring + StringWrapper{"#", 1} + source);
+
+    if (DEBUG) {
+        std::cout << "Префиксный массив:" << std::endl;
+        for (int v : prefix) {
+            std::cout << v << " ";
+        }
+        std::cout << std::endl;
+    }
+
     for (int i = 0; i < source.size(); ++i) {
         if (prefix[substring.size() + 1 + i] == substring.size())
             start_indexes.push_back(i - substring.size() + 1);
@@ -41,19 +51,7 @@ inline std::vector<int> KnutMorrisPratt(const std::string& source,
 
 inline int CycleShiftDetect(const std::string& source,
                             const std::string& substring) {
-    if (source.size() != substring.size())
-        return -1;
-
-    auto prefix = PrefixFunction({MiniWrapper{source.data(), source.size()},
-                                  MiniWrapper{"#", 1},
-                                  MiniWrapper{substring.data(), substring.size()},
-                                  MiniWrapper{substring.data(), substring.size()}});
-
-    for (int i = substring.size() + 1; i < source.size() + 2*substring.size() + 1; ++i) {
-        if (prefix[i] == substring.size()) {
-            return i - 2 * substring.size();
-        }
-    }
-
-    return -1;
+    return source.size() == substring.size()
+            ? KnutMorrisPratt(ConcatenatedStringsWrapper(substring) + substring, source)[0]
+            : -1;
 }

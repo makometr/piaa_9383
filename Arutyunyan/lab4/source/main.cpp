@@ -2,8 +2,6 @@
 #include <algorithm>
 
 #include "knutmorrispratt.hpp"
-#include "stringwrapper.hpp"
-
 
 int main() {
     std::string source, substring;
@@ -12,7 +10,13 @@ int main() {
     std::getline(std::cin, source);
 
     auto answer = CycleShiftDetect(source, substring);
-    std::cout << answer << std::endl;
+    std::cout << "Ответ: " << answer << std::endl;
+//    auto answer = KnutMorrisPratt(source, substring);
+//    std::cout << "Ответ: ";
+//    for (int v : answer) {
+//        std::cout << v << " ";
+//    }
+//    std::cout << std::endl;
 
     return 0;
 }
