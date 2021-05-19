@@ -1,15 +1,15 @@
-#pragma once
-
+#include <iostream>
 #include <vector>
 #include <string>
 
 #include "stringwrapper.hpp"
+#include "knutmorrispratt.h"
 
 
-static inline const bool DEBUG = false;
+constexpr bool DEBUG = false;
 
 
-inline std::vector<int> PrefixFunction(const ConcatenatedStringsWrapper& s) {
+std::vector<int> PrefixFunction(const ConcatenatedStringsWrapper& s) {
     std::vector<int> prefix_array(s.size());
 
     for (int i = 1; i < s.size(); ++i) {
@@ -25,7 +25,7 @@ inline std::vector<int> PrefixFunction(const ConcatenatedStringsWrapper& s) {
     return prefix_array;
 }
 
-inline std::vector<int> KnutMorrisPratt(const ConcatenatedStringsWrapper& source,
+std::vector<int> KnutMorrisPratt(const ConcatenatedStringsWrapper& source,
                                         const ConcatenatedStringsWrapper& substring) {
     std::vector<int> start_indexes;
 
@@ -49,7 +49,7 @@ inline std::vector<int> KnutMorrisPratt(const ConcatenatedStringsWrapper& source
     return start_indexes;
 }
 
-inline int CycleShiftDetect(const std::string& source,
+int CycleShiftDetect(const std::string& source,
                             const std::string& substring) {
     return source.size() == substring.size()
             ? KnutMorrisPratt(ConcatenatedStringsWrapper(substring) + substring, source)[0]

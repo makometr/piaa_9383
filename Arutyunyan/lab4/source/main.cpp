@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
 
-#include "knutmorrispratt.hpp"
+#include "knutmorrispratt.h"
 
 int main() {
     std::string source, substring;

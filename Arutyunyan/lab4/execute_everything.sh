@@ -1,1 +1,1 @@
-g++ source/main.cpp --std=c++17 -o cool_program && ./cool_program
+g++ source/main.cpp source/knutmorrispratt.cpp --std=c++17 -o cool_program && ./cool_program

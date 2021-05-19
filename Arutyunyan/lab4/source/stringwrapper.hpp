@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
+
 struct StringWrapper {
     const char* data;
     std::size_t size_;
