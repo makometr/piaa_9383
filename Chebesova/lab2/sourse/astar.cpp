@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 
-bool cmp (const std::tuple<char, char, float> &first, const std::tuple<char, char, float> &second)
+bool cmp_dist_for_queue (const std::tuple<char, char, float> &first, const std::tuple<char, char, float> &second)
 {
     if (std::get<2>(first) < std::get<2>(second))
     {
@@ -54,7 +54,7 @@ int main()
         {
             queue.push_back(std::make_tuple(current_vertex, vertex->name, path + vertex->len + h(vertex->name, finish)));
         }
-        std::sort(queue.begin(), queue.end(), cmp);
+        std::sort(queue.begin(), queue.end(), cmp_dist_for_queue);
         char from;
         while(!queue.empty())
         {
