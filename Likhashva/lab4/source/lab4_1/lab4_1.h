@@ -7,12 +7,12 @@
 class KMP {
 private:
 	std::string P, T;
-	std::vector<int> arrPrefix;
-	std::vector<int> answer;
+	mutable std::vector<int> arrPrefix;
+	mutable std::vector<int> answer;
 public:
 	KMP() {};
 	void Read();
-	void PrintAnswer();
-	void Prefix();
-	void AlgorithmKMP();
+	void PrintAnswer() const;
+	void Prefix() const;
+	void AlgorithmKMP() const;
 };

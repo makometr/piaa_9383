@@ -9,10 +9,10 @@ void KMP::Read() {
 }
 
 
-void KMP::PrintAnswer() {
+void KMP::PrintAnswer() const{
     std::cout << "\n\n_Ответ_:\n";
     if (answer == -1) {
-        std::cout << "A Не является циклическим сдвигом B.\n";
+        std::cout << "A не является циклическим сдвигом B.\n";
         std::cout << answer << '\n';
     }
     else {
@@ -22,7 +22,7 @@ void KMP::PrintAnswer() {
 }
 
 
-void KMP::Prefix() {   //префикс-функция
+void KMP::Prefix() const{   //префикс-функция
     std::cout << "\n_Подсчет префикс-функции_:\n\n";
     int bLength = B.length();
     arrPrefix = std::vector<int>(bLength);
@@ -60,7 +60,7 @@ void KMP::Prefix() {   //префикс-функция
 }
 
 
-void KMP::CyclicShift() {
+void KMP::CyclicShift() const{
     if (A.length() != B.length()) {
         std::cout << "Длинны строк не равны, значит это не циклический сдвиг.\n";
         answer = -1;

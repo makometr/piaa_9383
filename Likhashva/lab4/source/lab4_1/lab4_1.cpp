@@ -8,7 +8,7 @@ void KMP::Read() {
 	std::cin >> T;
 }
 
-void KMP::PrintAnswer() {
+void KMP::PrintAnswer() const {
     std::cout << "\n_Ответ_:\n";
     if (!answer.size()) {
         std::cout << "P не входит в T\n";
@@ -26,7 +26,7 @@ void KMP::PrintAnswer() {
     std::cout << '\n';
 }
 
-void KMP::Prefix() {   //префикс-функция
+void KMP::Prefix() const {   //префикс-функция
 	std::cout << "\n_Подсчет префикс-функции_:\n\n";
 	int pLength = P.length();
     arrPrefix = std::vector<int>(pLength);
@@ -64,7 +64,7 @@ void KMP::Prefix() {   //префикс-функция
 }
 
 
-void KMP::AlgorithmKMP(){
+void KMP::AlgorithmKMP() const{
     Prefix();
     std::cout << "\n\n_Алгоритм Кнута-Морриса-Пратта_:\n\n";
     int tSize = T.size();
