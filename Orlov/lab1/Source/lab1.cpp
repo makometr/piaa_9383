@@ -8,11 +8,8 @@ Field::Field(int w, int h)
 
     for(int i = 0; i < this->Height; i++)
     {
-        this->table.push_back(vector<bool>());
-        for(int j = 0; j < this->Width; j++)
-        {
-            this->table[this->table.size()-1].push_back(0);
-        }
+        this->table.push_back(std::vector<bool>());
+        this->table[this->table.size()-1].resize(w);
     }
 }
 
@@ -53,7 +50,7 @@ void Field::setBusy(int x, int y)
 
 void Field::buildSquare(int x, int y, int sizeS)
 {
-    if(sizeS > 0 && sizeS < min(this->Width, this->Height))
+    if(sizeS > 0 && sizeS < std::min(this->Width, this->Height))
     {
         this->Squares.push_back({sizeS, x, y});
         for(int i = y; i < y+sizeS; i++)
@@ -108,9 +105,27 @@ int Field::findMaxSizeOfSquare(int x, int y, int maxSize)
 }
 
 
+bool Field::checkOptimality()
+{
+    if(this->Squares.size()>0 && this->bestSquares.size()>0 && this->bestSquares.size() < this->Squares.size())
+    {
+        return false;
+    }
+    return true;
+}
+
+bool Field::checkMinimality()
+{
+    if(this->bestSquares.size() > this->Squares.size() || this->bestSquares.size() == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
 void Field::backtracking()
 {
-    int maxSize = min(this->Height, this->Width) - 1;
+    int maxSize = std::min(this->Height, this->Width) - 1;
     bool full = false;
     Square S;
     Square newSquare;
@@ -133,13 +148,13 @@ void Field::backtracking()
 
             this->buildSquare(newSquare.x, newSquare.y, findMaxSizeOfSquare(newSquare.x,newSquare.y, maxSize));
 
-            if(this->Squares.size()>0 && this->bestSquares.size()>0 && this->bestSquares.size() < this->Squares.size())
+            if(this->checkOptimality() == false)
             {
                 break;
             }
         }
 
-        if((this->bestSquares.size() > this->Squares.size() || this->bestSquares.size() == 0) && full)
+        if(this->checkMinimality() && full)
         {
             this->bestSquares = this->Squares;
             this->counter = 0;

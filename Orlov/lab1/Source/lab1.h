@@ -2,10 +2,6 @@
 #include <vector>
 #include <cmath>
 
-
-using namespace std;
-
-
 struct Square
 {
     int sizeSquare;
@@ -21,9 +17,9 @@ public:
     int Width, Height;
     int counter = 0;
 
-    vector <vector <bool>> table;
-    vector <Square> Squares;
-    vector <Square> bestSquares;
+    std::vector <std::vector <bool>> table;
+    std::vector <Square> Squares;
+    std::vector <Square> bestSquares;
 
     Field(int w, int h);
 
@@ -31,6 +27,9 @@ public:
 
     bool isFree(int x, int y);
     bool isFull();
+
+    bool checkOptimality();
+    bool checkMinimality();
 
     void setFree(int x, int y);
     void setBusy(int x, int y);
