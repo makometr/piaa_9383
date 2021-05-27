@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-bool mycmp(std::pair<char, std::pair<char, int>> a, std::pair<char, std::pair<char, int>> b)
+bool LenghtOpenEdgesCMP(std::pair<char, std::pair<char, int>> a, std::pair<char, std::pair<char, int>> b)
 {
     return a.second.second < b.second.second;
 }
@@ -43,7 +43,7 @@ bool BFS(std::map<char, std::map<char, std::pair<int, bool>>> &Graph, std::map<c
     //запускаем обход вершин
     while (1)
     {
-        sort(open.begin(), open.end(), mycmp);                       //сортируем открытый список по длине ребер
+        sort(open.begin(), open.end(), LenghtOpenEdgesCMP);          //сортируем открытый список по длине ребер
         std::vector<std::pair<char, std::pair<char, int>>> tmp_open; // first - откуда пришли, second.first - сама вершина, second.second - расстояние до неё от предыдущей
         while (!open.empty())
         {
