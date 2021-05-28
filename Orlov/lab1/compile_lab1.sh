@@ -1,0 +1,1 @@
+g++ Source/lab1.cpp Source/main.cpp -o lab1
