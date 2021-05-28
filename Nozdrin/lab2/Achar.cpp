@@ -4,20 +4,21 @@
 #include <tuple>
 #include <vector>
 
-namespace AStar {
+namespace AChar {
   /// Input/output functions
   std::vector<std::string> split(std::string&, std::vector<std::string>&);
-  std::tuple<int, int, float> readEdge(std::string);
-  void readData(int&, int&, std::vector<std::tuple<int, int, float>>&);
-  void printData(int&, int&, std::vector<std::tuple<int, int, float>>&);
+  std::tuple<char, char, float> readEdge(std::string);
+  void readData(char&, char&, std::vector<std::tuple<char, char, float>>&);
+  void printData(char&, char&, std::vector<std::tuple<char, char, float>>&);
   /// Realisation
-  int heuristicFunction(const int&, const int&);
+  int heuristicFunction(const char&, const char&);
   class Vertex {
    public:
-    int name, route_prev;
+    char name;
+    int route_prev;
     float f, g, h;
 
-    Vertex(int name, float g, int end) : name(name), g(g), route_prev(-1) {
+    Vertex(char name, float g, char end) : name(name), g(g), route_prev(-1) {
       h = (float) heuristicFunction(name, end);
       f = g + h;
     }
@@ -34,13 +35,13 @@ namespace AStar {
       return a.name == b.name;
     }
   };
-  bool belongs(int, const std::vector<int>&);
-  void addToQueue(Vertex&, int&, const std::vector<std::tuple<int, int, float>>&, std::vector<Vertex>&, std::priority_queue<Vertex,std::vector<Vertex>,
-                  std::greater_equal<Vertex>>&, std::vector<int>&);
-  std::string makePath(int, int, const std::vector<std::tuple<int, int, float>>&);
+  bool belongs(char, const std::vector<char>&);
+  void addToQueue(Vertex&, char&, const std::vector<std::tuple<char, char, float>>&, std::vector<Vertex>&, std::priority_queue<Vertex,std::vector<Vertex>,
+                  std::greater_equal<Vertex>>&, std::vector<char>&);
+  std::string makePath(char, char, const std::vector<std::tuple<char, char, float>>&);
 }
 
-std::vector<std::string> AStar::split(std::string &str, std::vector<std::string> &result) {
+std::vector<std::string> AChar::split(std::string &str, std::vector<std::string> &result) {
   for (int i = 0, j = 0; j < str.size(); j++) {
     if (str[j] == ' ' || str[j] == '\n') {
       result.emplace_back(str.substr(i, j - i));
@@ -51,24 +52,24 @@ std::vector<std::string> AStar::split(std::string &str, std::vector<std::string>
   return result;
 }
 
-std::tuple<int, int, float> AStar::readEdge(std::string edge) {
+std::tuple<char, char, float> AChar::readEdge(std::string edge) {
   std::vector<std::string> vec;
   split(edge, vec);
-  int v1 = stoi(vec[0]);
-  int v2 = stoi(vec[1]);
+  char v1 = vec[0][0];
+  char v2 = vec[1][0];
   float len = stof(vec[2]);
   return std::make_tuple(v1, v2, len);
 }
 
-void AStar::readData(int &start, int &end, std::vector<std::tuple<int, int, float>> &edges) {
+void AChar::readData(char &start, char &end, std::vector<std::tuple<char, char, float>> &edges) {
   std::string edge;
 
   std::getline(std::cin, edge);
   std::vector<std::string> vec;
   split(edge, vec);
 
-  start = stoi(vec[0]);
-  end = stoi(vec[1]);
+  start = vec[0][0];
+  end = vec[1][0];
 
   do {
     std::getline(std::cin, edge);
@@ -85,24 +86,24 @@ void AStar::readData(int &start, int &end, std::vector<std::tuple<int, int, floa
   } while (std::cin);
 }
 
-void AStar::printData(int &start, int &end, std::vector<std::tuple<int, int, float>> &edges) {
+void AChar::printData(char &start, char &end, std::vector<std::tuple<char, char, float>> &edges) {
   std::cout << start << ' ' << end << '\n';
   for (auto i : edges)
     std::cout << std::get<0>(i) << ' ' << std::get<1>(i) << ' ' << std::get<2>(i) << '\n';
 }
 
-int AStar::heuristicFunction(const int &v, const int &u) {
-  return abs(v - u);
+int AChar::heuristicFunction(const char &v, const char &u) {
+  return abs((int)v - (int)u);
 }
 
-bool AStar::belongs(int name, const std::vector<int> &close) {
-  return std::any_of(close.cbegin(), close.cend(), [name](auto x) { return x == name; });
+bool AChar::belongs(char name, const std::vector<char> &close) {
+  return std::any_of(close.cbegin(), close.cend(), [name](char x) { return x == name; });
 }
 
-void AStar::addToQueue(Vertex &cur, int &end, const std::vector<std::tuple<int, int, float>> &edges,
+void AChar::addToQueue(Vertex &cur, char &end, const std::vector<std::tuple<char, char, float>> &edges,
                        std::vector<Vertex>&                                                  vertices,
                        std::priority_queue<Vertex,std::vector<Vertex>,std::greater_equal<Vertex>>& open,
-                       std::vector<int>&                                                     close) {
+                       std::vector<char>&                                                     close) {
   for (const auto &edge : edges) {
     if (cur.name == std::get<0>(edge)) {
       if (belongs(std::get<1>(edge), close))
@@ -114,12 +115,12 @@ void AStar::addToQueue(Vertex &cur, int &end, const std::vector<std::tuple<int, 
   }
 }
 
-std::string AStar::makePath(int start, int end, const std::vector<std::tuple<int, int, float>>& edges) {
+std::string AChar::makePath(char start, char end, const std::vector<std::tuple<char, char, float>>& edges) {
   std::string result, errorMsg = "ERROR:\tNO PATH";
 
   std::vector<Vertex> vertices;
   std::priority_queue<Vertex, std::vector<Vertex>, std::greater_equal<Vertex>> open;
-  std::vector<int> close;
+  std::vector<char> close;
 
   Vertex cur(start, 0, 0);
   open.push(cur);
@@ -138,18 +139,25 @@ std::string AStar::makePath(int start, int end, const std::vector<std::tuple<int
 
   // restore the path
   // cur == end
-  std::vector<int> res;
+  std::string res1;
+  std::string res2;
+  std::vector<char> res;
   while (true) {
     if (cur.route_prev == -1) {
+      res1 += cur.name;
       res.push_back(cur.name);
       break;
     }
     res.push_back(cur.name);
+    res1 += cur.name;
     cur = vertices[cur.route_prev];
   }
 
-  for (int i = (int)(res.size()) - 1; i >= 0; i--)
-    result += std::to_string(res[i]) + ' ';
+  for (auto x = res1.rbegin(); x != res1.rend(); ++x)
+    res2 += *x;
 
-  return result;
+//  for (int i = (int)(res.size()) - 1; i >= 0; i--)
+//    result += res[i] + ' ';
+
+  return res2;
 }
