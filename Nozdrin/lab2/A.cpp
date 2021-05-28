@@ -35,8 +35,8 @@ namespace AStar {
     }
   };
   bool belongs(int, const std::vector<int>&);
-  void addToQueue(Vertex&, int&, const std::vector<std::tuple<int, int, float>>&, std::vector<Vertex>&,
-      std::priority_queue<Vertex,std::vector<Vertex>,std::greater_equal<>>&, std::vector<int>&);
+  void addToQueue(Vertex&, int&, const std::vector<std::tuple<int, int, float>>&, std::vector<Vertex>&, std::priority_queue<Vertex,std::vector<Vertex>,
+                  std::greater_equal<>>&, std::vector<int>&);
   std::string makePath(int, int, const std::vector<std::tuple<int, int, float>>&);
 }
 
