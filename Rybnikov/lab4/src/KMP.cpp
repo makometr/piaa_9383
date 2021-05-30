@@ -2,7 +2,7 @@
 
 std::vector<int> KMP::FindPrefix(const std::string &str){
     if(str.empty()){
-        throw "Prefix error";
+        throw -1;
     }
     
     std::vector<int> pi;
