@@ -1,0 +1,5 @@
+def abcdefghiglkmnop 3
+def abcdefghiglkmnopdef 3,16
+qwe abcdefghiglkmnop -1
+fgds ashdjkfzxcvuilajsdklfhuiwehkasjdfh -1
+abc abcabcabcabcabcabcabcabcabc 0,3,6,9,12,15,18,21,24
