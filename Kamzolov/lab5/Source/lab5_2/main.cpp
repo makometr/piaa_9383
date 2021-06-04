@@ -11,4 +11,5 @@ int main() {
     suffixFunc(root);
     std::vector<int> ans = ahoCorasik(text, root, count, pattern.size());
     printAnswer(ans);
+    freeMemory(root);
 }

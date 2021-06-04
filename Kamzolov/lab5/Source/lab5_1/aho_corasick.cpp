@@ -137,3 +137,11 @@ void printAnswer(std::vector<std::pair<int, int>>& ans) {
         std::cout << pair.first << ' ' << pair.second << '\n';
     }
 }
+
+void freeMemory(Node* root) {
+    Node* tempNode = root; 
+    for(auto& neighbour : tempNode->next) {
+        freeMemory(neighbour.second);
+    }
+    delete tempNode;
+}

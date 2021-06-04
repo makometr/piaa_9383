@@ -23,5 +23,7 @@ void input(std::string& text, std::string& pattern, char& joker, std::istream& i
 std::vector<int> ahoCorasik(std::string& text, Node* root, int count, int patternSize);
 void printAnswer(std::vector<int>& ans);
 void splitString(Node* root, std::string& pattern, char joker, int& count);
+void freeMemory(Node* root);
+
 
 #endif

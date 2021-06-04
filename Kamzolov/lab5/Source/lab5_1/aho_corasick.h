@@ -27,5 +27,6 @@ void wordToTrie(Node* root, std::string& word, int number);
 void input(std::string& text, Node* root, std::istream& in);
 std::vector<std::pair<int, int>> ahoCorasik(std::string& text, Node* root);
 void printAnswer(std::vector<std::pair<int, int>>& ans);
+void freeMemory(Node* root);
 
 #endif

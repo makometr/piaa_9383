@@ -9,4 +9,5 @@ int main() {
 
     std::vector<std::pair<int, int>> ans = ahoCorasik(text, root);
     printAnswer(ans);
+    freeMemory(root);
 }

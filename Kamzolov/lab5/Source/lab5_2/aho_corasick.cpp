@@ -139,3 +139,11 @@ void splitString(Node* root, std::string& pattern, char joker, int& count) {
         count++;
     }
 }
+
+void freeMemory(Node* root) {
+    Node* tempNode = root; 
+    for(auto& neighbour : tempNode->next) {
+        freeMemory(neighbour.second);
+    }
+    delete tempNode;
+}
