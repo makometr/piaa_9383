@@ -9,8 +9,8 @@ std::vector<int> Prefix(const std::string &myText){
     int n = myText.length();
     std::vector<int> pi(myText.length(), 0);
     
-    for(int i = 1; i < n; ++i){
-        int j = pi[i - 1];
+    for(size_t i = 1; i < n; ++i){
+        size_t j = pi[i - 1];
         while(j > 0 && myText[i] != myText[j]){
             j = pi[j - 1];
         }
