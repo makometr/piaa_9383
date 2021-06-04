@@ -1,0 +1,5 @@
+qwertyq 0,0,0,0,0,0,1
+asdfgasdfg 0,0,0,0,0,1,2,3,4,5
+zxcvbasdfzxcv 0,0,0,0,0,0,0,0,0,1,2,3,4
+uierysjkdfh 0,0,0,0,0,0,0,0,0,0,0
+abcdefabcdef 0,0,0,0,0,0,1,2,3,4,5,6
