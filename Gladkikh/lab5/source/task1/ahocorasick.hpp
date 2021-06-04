@@ -30,6 +30,7 @@ class AhoCorasick{
 public:
 
     AhoCorasick();
+    ~AhoCorasick();
     void add_string(const std::string& patt);
 
     std::vector<std::pair<int, int>> search(const std::string& temp);
@@ -46,6 +47,6 @@ private:
     
     void create_refs();
     void print_trie(Node* cur_node, int level);
-
+    void clear_memory(Node* cur_node);
 
 };

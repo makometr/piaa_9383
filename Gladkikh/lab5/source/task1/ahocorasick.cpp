@@ -137,6 +137,20 @@ void AhoCorasick::print_trie(Node* cur_node, int level) {
     }
 }
 
+void AhoCorasick::clear_memory(Node* cur_node) {
+    if(!cur_node) return;
+
+    for(const auto& next_node: cur_node->next_nodes) {
+        clear_memory(next_node);
+    }
+
+    delete cur_node;
+}
+
+AhoCorasick::~AhoCorasick() {
+    clear_memory(root_node_);
+}
+
 Node* Node::find_next_node(char symbol_to_find) {
     for(const auto& next_node: next_nodes) {
         if (next_node->symbol == symbol_to_find) {

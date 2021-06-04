@@ -31,6 +31,7 @@ class AhoCorasick{
 public:
 
     AhoCorasick();
+    ~AhoCorasick();
     void add_pattern_with_jokers(std::string patt, const char joker);
 
     std::vector<int> search(const std::string& temp);
@@ -50,5 +51,6 @@ private:
     void print_trie(Node* cur_node, int level);
     void add_string_with_offset(const std::string& patt, int offset);
 
+    void clear_memory(Node* cur_node);
 
 };
