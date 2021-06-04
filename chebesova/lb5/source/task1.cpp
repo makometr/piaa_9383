@@ -39,6 +39,15 @@ struct Bor
         suffix_link = nullptr;
         end_suffix_link = nullptr;
     }
+
+     void delete_children() 
+     {
+        for (auto &child : this->children) 
+        {
+            child->delete_children();
+            delete child;
+        }
+    }
     
     //функция для спуска по бору по ребру к потомку
     Bor* go_to_child_by_edge (char child_edge)
@@ -112,6 +121,12 @@ struct DFA
         patterns = new_patterns;
         bild_bor(new_patterns);
         add_all_suffix_links();
+    }
+
+    ~DFA () 
+    {
+        root->delete_children();
+        delete root;
     }
     
     //создание бора путем добавления в него строк-паттернов

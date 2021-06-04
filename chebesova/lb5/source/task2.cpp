@@ -36,6 +36,15 @@ struct Bor
         suffix_link = nullptr;
         end_suffix_link = nullptr;
     }
+
+    void delete_children() 
+     {
+        for (auto &child : this->children) 
+        {
+            child->delete_children();
+            delete child;
+        }
+    }
     
     Bor* go_to_child_by_edge (char child_edge)
     {
@@ -104,6 +113,12 @@ struct DFA
         patterns = new_patterns;
         add_patterns(new_patterns);
         add_all_suffix_links();
+    }
+
+    ~DFA () 
+    {
+        root->delete_children();
+        delete root;
     }
     
     void add_patterns (std::vector<std::pair<std::string, int>>& new_patterns) 
