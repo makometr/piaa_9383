@@ -1,0 +1,1 @@
+g++ source/variant/*.cpp source/variant/aho_corasick.hpp -o program && ./program

@@ -1,0 +1,1 @@
+g++ tests/tests.cpp source/variant/bohr.cpp source/variant/aho_corasick.hpp --std=c++17 && ./a.out

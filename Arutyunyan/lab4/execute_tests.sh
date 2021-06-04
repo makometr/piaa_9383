@@ -1,1 +1,0 @@
-g++ ../../../catch.hpp tests/tests.cpp --std=c++17 -o exec_tests && ./exec_tests
