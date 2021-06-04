@@ -5,6 +5,7 @@ void AhoCorasick::addPattern(std::string str, int pattern_state){
     for (size_t i = 0; i < str.size(); i++){
         if (!curr_node->links[str[i]]){
             curr_node->links[str[i]] = new BorTree;
+            alloc.push(curr_node->links[str[i]]);
         }
         curr_node = curr_node->links[str[i]];
     }

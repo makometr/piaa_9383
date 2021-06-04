@@ -7,7 +7,9 @@ void AhoCorasick::addPattern(std::string str, int pattern_state){
     for (size_t i = 0; i < str.size(); i++){
         if (!curr_node->links[str[i]]){
             curr_node->links[str[i]] = new BorTree;
+            alloc.push(curr_node->links[str[i]]);
         }
+        if (curr_node->links[str[i]]->term > 0) return;
         curr_node = curr_node->links[str[i]];
         curr_node->depth = d++;
     }
@@ -58,6 +60,7 @@ Result AhoCorasick::find_ak(){
         while (answer_node != root){
             if (answer_node->term > 0){
                 result.push_back(std::pair<int, int>(i + 2 - answer_node->depth, answer_node->term));
+                curr_node = root;
             }
             answer_node = answer_node->suffixLink;
         }

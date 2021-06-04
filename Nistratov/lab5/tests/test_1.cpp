@@ -31,7 +31,7 @@ TEST_CASE("Ахо-Корасик") {
         REQUIRE(compare_res(res, ans));
     }
     SECTION("Шаблоны пересекаются") {
-        std::vector<std::pair<int, int>> ans = {{2, 3}, {2, 2}};
+        std::vector<std::pair<int, int>> ans = {{2, 3}};
         AhoCorasick ak("NTAG");
         ak.addPattern("TAGT", 1);
         ak.addPattern("TAG", 2);
