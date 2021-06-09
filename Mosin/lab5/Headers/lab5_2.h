@@ -9,6 +9,11 @@
 #include <map>
 
 struct Trie {
+    ~Trie() {
+        for (auto it : children) {
+            delete it.second;
+        }
+    }
     std::map<char, Trie*> children;
     Trie* suffix_link = nullptr;
     std::vector<int> wild_card_position;

@@ -8,6 +8,11 @@
 #include <map>
 
 struct Trie {
+    ~Trie() {
+        for (auto it : children) {
+            delete it.second;
+        }
+    }
     std::map<char, Trie*> children;
     Trie* suffix_link = nullptr;
     int order = 0;

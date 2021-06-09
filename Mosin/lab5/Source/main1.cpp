@@ -21,5 +21,6 @@ int main(int argc, char *argv[]) {
         std::cout << it.first << " " << it.second << std::endl;
     }
 
+    delete root;
     return 0;
 }

@@ -16,5 +16,6 @@ int main(int argc, char *argv[]) {
         std::cout << position << std::endl;
     }
 
+    delete root;
     return 0;
 }
