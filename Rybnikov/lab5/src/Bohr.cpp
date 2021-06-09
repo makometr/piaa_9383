@@ -78,10 +78,7 @@ void Bohr::Print(int vertex, int i){
             std::cout << i - patterns[bohr[u].PatternNumber].length() + 1 << " " << bohr[u].PatternNumber + 1 << std::endl;
     }
 }
-    Bohr::~Bohr(){
-        bohr.clear();
-        bohr.shrink_to_fit();
-    }
+
 // ------------------------------------------------
 #endif
 
@@ -152,8 +149,9 @@ void Bohr::AhoK(){
 }
 
     Bohr::~Bohr(){
-        bohr.clear();
-        bohr.shrink_to_fit();
+        for(int i = 0; i < bohr.size(); i++){
+            delete bohr[i];
+        }
     }
 
 #endif

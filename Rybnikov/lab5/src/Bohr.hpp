@@ -35,7 +35,7 @@ class Bohr{
     std::map<char, int> alphabet{ { 'A', 0 }, { 'C', 1 }, { 'G', 2 }, { 'T', 3 }, { 'N', 4 } };
 public:
     Bohr();
-    ~Bohr();
+    ~Bohr() = default;
     void AddInBohr(std::string &str);             
     int GetSuffix(int vertex);
     int Move(int vertex, int symb);      
