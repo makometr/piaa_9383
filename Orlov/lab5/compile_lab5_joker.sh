@@ -1,0 +1,1 @@
+g++ src/lab5_joker.cpp -o lab5_joker

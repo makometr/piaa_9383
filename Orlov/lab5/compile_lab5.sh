@@ -1,0 +1,1 @@
+g++ src/lab5.cpp -o lab5
