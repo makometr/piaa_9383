@@ -1,0 +1,1 @@
+g++ src/lab4_circle.cpp -o lab4_task2
